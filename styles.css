@@ -1,0 +1,34 @@
+body {
+    font-family: Nunito, sans-serif;
+}
+
+.menu_bar{
+    color: #000000;
+    vertical-align: baseline;
+}
+
+.menu_bar a{
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 25px;
+    color: #e55627;
+}
+
+.navbuttons {
+    font-size: 35px;
+}
+
+.navbuttons a:hover {
+    color: #FFCB12;
+}
+
+.navbuttons a:active { 
+    color: #b6910d;
+}
+
+.navbuttons a.selected {
+    color: #FF8C12;
+    text-decoration:underline;
+}
