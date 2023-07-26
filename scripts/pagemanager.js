@@ -19,7 +19,7 @@ function pageManager(){
 
     for (var i = 0; i < menuButtons.length; i++) {
         if (menuButtons[i].href === newDir) {
-            menuButtons[i].classList.add('selected')
+            menuButtons[i].classList.add('current_tab')
             break;
         }
     }

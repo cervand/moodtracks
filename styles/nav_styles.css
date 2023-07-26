@@ -15,6 +15,7 @@ body {
 
 .menu_bar a{
     text-decoration: none;
+    color: #000000;
 }
 
 .logo {
@@ -34,11 +35,6 @@ body {
     color: #FFCB12;
 }
 
-.navbuttons a:active { 
-    color: #b6910d;
-}
-
-.navbuttons a.selected {
+.navbuttons a.current_tab {
     color: #FF8C12;
-    text-decoration:underline;
 }
