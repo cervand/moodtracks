@@ -9,14 +9,13 @@
 <head>
     <title>moodtracks.app</title>
     <meta name="author" content="Andres Cervantes" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="styles.css">
-    <meta
-        name="description"
+    <meta name="description"
         content="What pumps you up? What do you listen to when you are happy? Find out and share with your friends on moodtracks.app" 
     />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
 
+    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap" rel="stylesheet">
@@ -25,10 +24,10 @@
 <body>
     <div class="menu_bar">
         <div class = "logo">
-            <img src="resources/moodtracks.app logo.png" width="200">
+            moodtracks.app
         </div>
         <div class="navbuttons">
-            <a class = "active" href="#home" onclick="setActiveButton(this)">home</a>
+            <a class = "selected" href="#home" onclick="setActiveButton(this)">home</a>
             <a href = "#about" onclick="setActiveButton(this)">about</a>
             <a href = "#contact" onclick="setActiveButton(this)">contact</a>
         </div>
@@ -42,10 +41,10 @@
         var menuButtons = document.getElementsByClassName('navbuttons')[0].getElementsByTagName('a');
 
         for (var i = 0; i < menuButtons.length; i++) {
-            menuButtons[i].classList.remove('active');
+            menuButtons[i].classList.remove('selected');
         }
 
-        clickedButton.classList.add('active');
+        clickedButton.classList.add('selected');
     }
 </script>
 
