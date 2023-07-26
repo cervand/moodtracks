@@ -2,7 +2,8 @@
 moodtracks is a small web application that gathers your favorite songs for a specific mood using Spotify's API. This project is meant to review my HTML and CSS knowledge. I also want to learn how to apply my API knowledge using Javascript
 
 ## 🖼️ Goal Mockup
-![image](https://github.com/cervand/moodtracks/assets/95746489/c2a9b8f5-3d97-400d-8f8a-f056903f61af)
+![image](https://github.com/cervand/moodtracks/assets/95746489/52d0997e-bfec-440e-be41-57d9cb839819)
+
 
 ## 🛠️ Technologies Used (Expected)
 - Figma
