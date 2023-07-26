@@ -42,26 +42,3 @@ body {
     color: #FF8C12;
     text-decoration:underline;
 }
-
-.content {
-    margin-top: 8em;
-    display: inline-flex;
-    display: flex;
-    justify-content:space-between;
-}
-
-.LeftContentBody {
-    margin-left: 2em;
-    margin-right: 2em;
-    font-size: 60px;
-}
-
-.RightContentBody {
-    margin-right: 6em;
-    margin-left: 2em;
-}
-
-#focused_word {
-    font-size: 80px;
-    color: #FF8C12;
-}
