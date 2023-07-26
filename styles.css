@@ -1,10 +1,16 @@
 body {
     font-family: Nunito, sans-serif;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .menu_bar{
     color: #000000;
-    vertical-align: baseline;
+    display: inline-flex;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    
 }
 
 .menu_bar a{
@@ -18,6 +24,10 @@ body {
 
 .navbuttons {
     font-size: 35px;
+}
+
+.navbuttons a{
+    margin-left: 1em;
 }
 
 .navbuttons a:hover {
