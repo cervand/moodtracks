@@ -1,9 +1,85 @@
+<!--
+    Source code for moodtracks.app website. Mainly used to test and learn HTML/CSS/Javascript. 
+    Written by me, Andres Cervantes
+-->
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Font+Name">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<html lang="en-US">
+
+<head>
+    <title>moodtracks.app</title>
+    <meta name="author" content="Andres Cervantes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta
+        name="description"
+        content="What pumps you up? What do you listen to when you are happy? Find out and share with your friends on moodtracks.app" 
+    />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+
+    <style>
+        body {
+            margin: 1.5em;
+            font-family: Nunito, serif;
+        }
+
+        .menu_bar a {
+            color: #000000;
+            text-align: center;
+            padding: 0.5em;
+            text-decoration: none;
+            font-size: 35px;
+            font-weight: black;
+        }
+
+        .logo {
+            overflow: hidden;
+            float: left;
+        }
+
+        .navbuttons {
+            overflow: hidden;
+            float: right;
+        }
+
+        .navbuttons a:hover {
+            color: #FFCB12;
+        }
+
+        .navbuttons a.active {
+            color: #FF8C12;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu_bar">
+        <div class = "logo">
+            <!-- some code here -->
+        </div>
+        <div class="navbuttons">
+            <a class = "active" href="#home" onclick="setActiveButton(this)">home</a>
+            <a href = "#about" onclick="setActiveButton(this)">about</a>
+            <a href = "#contact" onclick="setActiveButton(this)">contact</a>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    // Function to handle the click event to highlight the currently selected navigation page.
+    function setActiveButton(clickedButton) {
+        var menuButtons = document.getElementsByClassName('navbuttons')[0].getElementsByTagName('a');
+
+        for (var i = 0; i < menuButtons.length; i++) {
+            menuButtons[i].classList.remove('active');
+        }
+
+        clickedButton.classList.add('active');
+    }
+
+
+</script>
+
 </html>
