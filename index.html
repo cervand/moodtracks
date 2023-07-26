@@ -16,12 +16,14 @@
         content="What pumps you up? What do you listen to when you are happy? Find out and share with your friends on moodtracks.app" 
     />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap" rel="stylesheet">
 
     <style>
         body {
             margin: 1.5em;
-            font-family: Nunito, serif;
+            font-family: Nunito, sans-serif;
         }
 
         .menu_bar a {
@@ -30,7 +32,7 @@
             padding: 0.5em;
             text-decoration: none;
             font-size: 35px;
-            font-weight: black;
+            font-weight: 1000;
         }
 
         .logo {
@@ -56,7 +58,7 @@
 <body>
     <div class="menu_bar">
         <div class = "logo">
-            <!-- some code here -->
+            <img src="resources/moodtracks.app logo.png" width="200">
         </div>
         <div class="navbuttons">
             <a class = "active" href="#home" onclick="setActiveButton(this)">home</a>
@@ -78,8 +80,6 @@
 
         clickedButton.classList.add('active');
     }
-
-
 </script>
 
 </html>
