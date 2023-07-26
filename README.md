@@ -17,3 +17,7 @@ moodtracks is a small web application that gathers your favorite songs for a spe
 - Create generated images
 - Implement Instagram share API
 - Add other music streaming services
+
+
+## ⌚ Current Status
+![image](https://github.com/cervand/moodtracks/assets/95746489/0fd01281-c523-433d-8151-ac37e2cffa4d)
