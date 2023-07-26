@@ -1,5 +1,5 @@
-# moodtracks
-moodtracks is a small web application that gathers your favorite songs for a specific mood using Spotify's API. This project is meant to review my HTML and CSS knowledge. I also want to learn how to apply my API knowledge using Javascript
+# moodtracks.app
+moodtracks.app is a small web application that gathers your favorite songs for a specific mood using Spotify's API. This project is meant to review my HTML and CSS knowledge. I also want to learn how to apply my API knowledge using Javascript
 
 ## 🖼️ Goal Mockup
 ![image](https://github.com/cervand/moodtracks/assets/95746489/52d0997e-bfec-440e-be41-57d9cb839819)
