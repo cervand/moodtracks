@@ -30,4 +30,5 @@
 .contact_card a:hover {
     background: #FFCB12;
     color:black;
+    transition: 0.1s;
 }

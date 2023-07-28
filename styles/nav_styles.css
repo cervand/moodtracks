@@ -41,3 +41,7 @@ body {
 .navbuttons a.current_tab {
     color: #FF8C12;
 }
+
+.logo a:active {
+    color: darksalmon;
+}
