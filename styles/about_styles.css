@@ -8,7 +8,7 @@
     margin-left: 4em;
     margin-right: 4em;
     margin-bottom: 4em;
-    background: linear-gradient(to left top, #fd671c, #ffcf21);
+    background: linear-gradient(to left top,#0a0c7a,#1518c9);
     border-radius: 50px;
 }
 
@@ -16,7 +16,7 @@
     margin-left: 4em;
     margin-right: 4em;
     margin-bottom: 4em;
-    background: linear-gradient(to left top, #e5abfc, #ffadf7);
+    background: linear-gradient(to left top,#3e0550,#810aa5);
     border-radius: 50px;
 }
 
@@ -24,7 +24,7 @@
     margin-left: 4em;
     margin-right: 4em;
     margin-bottom: 4em;
-    background: linear-gradient(to left top, #bfff8e, #71dae6);
+    background: linear-gradient(to left top,#c7611c,#ff7d27);
     border-radius: 50px;
 }
 
@@ -44,4 +44,5 @@
     margin-left: 3em;
     margin-right: 3em;
     padding-bottom: 2em;
+    color: white
 }

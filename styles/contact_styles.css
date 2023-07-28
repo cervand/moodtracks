@@ -1,6 +1,35 @@
 .content {
-    margin-top: 8em;
-    display: inline-flex;
-    display: flex;
-    justify-content:center;
+    margin-top: 3em;
+    margin-left: 2em;
+    margin-right: 2em;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.content h1 {
+    font-size: 4rem;
+    text-align: center;
+}
+
+.contact_card p{
+    text-align: center;
+}
+
+.contact_card {
+    background: linear-gradient(to left top, #1518c9, #810aa5);
+    margin-top: 2em;
+    padding: 2em;
+    border-radius: 90px;
+    display:flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.contact_card a{
+    text-decoration: none;
+    font-size: 2rem;
+    color: white;
 }
