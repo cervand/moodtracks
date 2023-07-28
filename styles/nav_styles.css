@@ -2,37 +2,40 @@ body {
     font-family: Nunito, sans-serif;
     margin-left: 1em;
     margin-right: 1em;
+    font-size: 1rem;
 }
 
 .menu_bar{
     color: #000000;
-    display: inline-flex;
-    align-items: center;
     display: flex;
+    align-items: start;
     justify-content: space-between;
-    
 }
 
-.menu_bar a{
+.logo a, .navbuttons a {
     text-decoration: none;
-    color: #000000;
 }
 
 .logo {
-    font-size: 25px;
+    font-size: 2.1rem;
     color: #e55627;
 }
 
 .navbuttons {
-    font-size: 35px;
+    display: flex;
+    align-items: end;
 }
 
-.navbuttons a{
-    margin-left: 1em;
+.navbuttons a {
+    color: #000000;
+    font-size: 2rem;
+    margin-left: 2em;
 }
+
 
 .navbuttons a:hover {
     color: #FFCB12;
+    transition: 0.1s;
 }
 
 .navbuttons a.current_tab {

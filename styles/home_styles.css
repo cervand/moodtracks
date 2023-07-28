@@ -1,22 +1,26 @@
 .content {
     margin-top: 8em;
-    display: inline-flex;
-    display: flex;
-    justify-content:space-between;
-}
-
-.LeftContentBody {
     margin-left: 2em;
     margin-right: 2em;
-    font-size: 60px;
+    display: flex;
+    align-items: start;
+    justify-content:space-evenly;
 }
 
-.RightContentBody {
-    margin-right: 6em;
-    margin-left: 2em;
+.LeftContentBody h1 {
+    font-size: 5rem;
 }
 
 #focused_word {
-    font-size: 80px;
     color: #FF8C12;
+}
+
+.RightContentBody {
+    margin-right: 4em;
+    margin-left: 4em;
+}
+
+.RightContentBody img {
+    width: 20vw;
+    height: auto;
 }
