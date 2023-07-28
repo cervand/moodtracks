@@ -1,24 +1,51 @@
+/*
+Changes the font and structure of page depending on the size of the screen viewing contents.
+*/
+@media screen and (max-width: 836px) {
+    .navbuttons {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: 0vw;
+        bottom: 70vh;
+        justify-content: end;
+    }
+
+    .burgermenu{
+        margin-bottom: 0.4em;
+        width: 3em;
+        height: 0.3em;
+        background-color: #000000;
+    }
+
+    .burgermenu .bottomstack{
+        margin-bottom: 0em;
+    }
+}
+
 body {
     font-family: Nunito, sans-serif;
     margin-left: 1em;
     margin-right: 1em;
-    font-size: 1rem;
 }
 
-.menu_bar{
-    color: #000000;
+.navbar{
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: space-between;
+}
+
+.navbuttons li{
+    list-style: none;
+}
+
+.logo {
+    font-size: 2rem;
+    color: darkblue;
 }
 
 .logo a, .navbuttons a {
     text-decoration: none;
-}
-
-.logo {
-    font-size: 2.1rem;
-    color: darkblue;
 }
 
 .navbuttons {
@@ -32,6 +59,9 @@ body {
     margin-left: 2em;
 }
 
+.burgermenu{
+    display: none;
+}
 
 .navbuttons a:hover {
     color: #FFCB12;
@@ -44,4 +74,11 @@ body {
 
 .logo a:active {
     color: darksalmon;
+}
+
+
+@media screen and (max-width: 412px) {
+    .logo{
+        font-size: 1rem;
+    }
 }

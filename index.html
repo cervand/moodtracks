@@ -14,6 +14,10 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="resources/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="resources/favicons/favicon-16x16.png">
 
     <link rel="stylesheet" href="styles/nav_styles.css">
     <link rel="stylesheet" href="styles/home_styles.css">
@@ -24,24 +28,28 @@
 </head>
 
 <body>
-    <div class="menu_bar">
+    <nav class="navbar">
         <div class = "logo">
             <a href="/index.html" onclick="setPressedButton(this)">moodtracks.app</a>
         </div>
-        <div class="navbuttons">
-            <a class = "current_tab" href = "/index.html" onclick="setPressedButton(this)">home</a>
-            <a href = "/about.html" onclick="setPressedButton(this)">about</a>
-            <a href = "/contact.html" onclick="setPressedButton(this)">contact</a>
+        <ul class="navbuttons">
+            <li><a class = "current_tab" href = "/index.html" onclick="setPressedButton(this)">home</a></li>
+            <li><a href = "/about.html" onclick="setPressedButton(this)">about</a></li>
+            <li><a href = "/contact.html" onclick="setPressedButton(this)">contact</a></li>
+        </ul>
+        <div class="burgermenu">
+            <div></div>
+            <div></div>
+            <div class="bottomstack"></div>
         </div>
-    </div>
+    </nav>
 
 
     <div class="content">
         <div class="LeftContentBody">
             <h1>
-                What are your 
-                <span id="focused_word"> moodtracks</span>
-                <span id="question_mark">?</span>
+                What are your<br>
+                <span id="focused_word"> moodtracks</span>?
             </h1>
             <a class="get_started_button" href="#thebutton">
                 Find your moodtracks
