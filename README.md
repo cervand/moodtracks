@@ -12,7 +12,8 @@ moodtracks.app is a small web application that gathers your favorite songs for a
 - CSS
 
 ## 🛣️ Roadmap
-- Create basic UI as shown above using HTML and CSS (currently in the works)
+- Create basic UI as shown above using HTML and CSS ✅
+- Implement responsive web design to current UI (Currently working on that!)
 - Implement Spotify API to get top songs based on track features
 - Create generated images
 - Implement Instagram share API
