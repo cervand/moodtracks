@@ -21,10 +21,10 @@ moodtracks.app is a small web application that gathers your favorite songs for a
 
 ## ⌚ Current Status
 Home Page:
-![image](/resources/readmeassets/currentstatus.png)
+![image](/resources/readmeassets/home.png)
 
 About Page:
-![image](/resources/readmeassets/curr_status_about.png)
+![image](/resources/readmeassets/about.png)
 
 Contact page:
 ![image](/resources/readmeassets/curr_status_contact.png)
