@@ -25,6 +25,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap" rel="stylesheet">
+
+    <script src="scripts/script.js" type="module"></script>
 </head>
 
 <body>
@@ -47,7 +49,19 @@
     </nav>
 
     <div class="content">
-        <a class="spotifyLogin"> Log in with Spotify</a>
+        <h1>Display your Spotify profile data</h1>
+
+        <section id="profile">
+        <h2>Logged in as <span id="displayName"></span></h2>
+        <span id="avatar"></span>
+        <ul>
+            <li>User ID: <span id="id"></span></li>
+            <li>Email: <span id="email"></span></li>
+            <li>Spotify URI: <a id="uri" href="#"></a></li>
+            <li>Link: <a id="url" href="#"></a></li>
+            <li>Profile Image: <span id="imgUrl"></span></li>
+        </ul>
+        </section>
     </div>
 
     <script src="scripts/pagemanager.js"> </script>
