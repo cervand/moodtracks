@@ -2,8 +2,12 @@
 Runs on page load to manage page resources. As of now, it simply manages the current page using page manager. 
 */
 window.onload = pageManager()
+const burgermenuicon = document.getElementsByClassName("burgermenuicon")[0]
+const navbuttons = document.getElementsByClassName("navbuttons")[0]
 
-
+burgermenuicon.addEventListener('click', ()=>{
+    navbuttons.classList.toggle('active');
+})
 /*
 Handles current page highlight
 */

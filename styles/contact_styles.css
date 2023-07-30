@@ -14,21 +14,60 @@
 }
 
 .contact_card{
-    margin: 3em;
+    margin-top: 3em;
 }
 
-.contact_card a{
+.github_profile_button {
     background: linear-gradient(to left top, #1518c9, #810aa5);
     text-decoration: none;
     font-size: 2rem;
     color: white;
-    margin-top: 2em;
-    padding: 1em;
+    text-align: center;
+    display: inline-block;
     border-radius: 90px;
+    padding: 1em;
 }
 
-.contact_card a:hover {
+.github_profile_button:hover {
     background: #FFCB12;
     color:black;
     transition: 0.1s;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        margin-top: 1em;
+        margin-left: 2vw;
+        margin-right: 2vw;
+    }
+}
+
+@media screen and (max-width: 628px) {
+    .content h1{
+        font-size: 3.5rem;
+    }
+
+    .github_profile_button {
+        font-size: 1.7rem;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .content h1{
+        font-size: 3rem;
+    }
+
+    .github_profile_button {
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .content h1{
+        font-size: 2rem;
+    }
+
+    .github_profile_button {
+        font-size: 1rem;
+    }
 }

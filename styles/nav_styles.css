@@ -1,28 +1,3 @@
-/*
-Changes the font and structure of page depending on the size of the screen viewing contents.
-*/
-@media screen and (max-width: 836px) {
-    .navbuttons {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        right: 0vw;
-        bottom: 70vh;
-        justify-content: end;
-    }
-
-    .burgermenu{
-        margin-bottom: 0.4em;
-        width: 3em;
-        height: 0.3em;
-        background-color: #000000;
-    }
-
-    .burgermenu .bottomstack{
-        margin-bottom: 0em;
-    }
-}
-
 body {
     font-family: Nunito, sans-serif;
     margin-left: 1em;
@@ -35,7 +10,7 @@ body {
     justify-content: space-between;
 }
 
-.navbuttons li{
+.navbuttons li, .mobile-nav-buttons li{
     list-style: none;
 }
 
@@ -50,17 +25,14 @@ body {
 
 .navbuttons {
     display: flex;
-    align-items: end;
+    align-items: center;
+    padding: 0;
 }
 
 .navbuttons a {
     color: #000000;
     font-size: 2rem;
     margin-left: 2em;
-}
-
-.burgermenu{
-    display: none;
 }
 
 .navbuttons a:hover {
@@ -72,13 +44,79 @@ body {
     color: #FF8C12;
 }
 
-.logo a:active {
-    color: darksalmon;
+.burgermenuicon {
+    display:none;
 }
 
+.burgermenuicon div{
+    border-radius: 50px;
+}
+
+/*
+Changes the font and structure of page depending on the size of the screen viewing contents.
+*/
+@media screen and (max-width: 836px) {
+    .navbar{
+       flex-direction: column; 
+    }
+
+    .logo {
+        align-self: start;
+    }
+    
+    .navbuttons.active{
+        display: flex;
+    }
+
+    .navbuttons{
+        display: none;
+        justify-content: space-evenly;
+        width: 100%;
+        margin: 0em;
+        margin-top: 0.5em;
+    }
+
+    .navbuttons a {
+        margin: 0em;
+        color: #000000;
+        text-align: center;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+
+    .burgermenuicon {
+        display: block;
+        position: absolute;
+        top: 1em;
+        right: 1em;
+    }
+
+    .burgermenuicon div{
+        margin-bottom: 0.2em;
+        background-color: #000000;
+        width: 3em;
+        height: 0.3em;
+    }
+    
+    .burgermenuicon .bottomstack{
+        margin-bottom: 0;
+    }
+}
 
 @media screen and (max-width: 412px) {
     .logo{
         font-size: 1rem;
+    }
+
+    .navbuttons a {
+        font-size: 1.6rem;
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+}
+
+@media screen and (max-width: 310px) {
+    .navbuttons a{
+        font-size: 1.3rem;
     }
 }
