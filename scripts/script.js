@@ -20,7 +20,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
-    params.append("redirect_uri", "https://www.moodtracks.me/yourmoodtracks.html");
+    params.append("redirect_uri", "http://localhost:8080/yourmoodtracks.html");
     params.append("scope", "user-read-private user-read-email user-top-read");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
@@ -55,7 +55,7 @@ export async function getAccessToken(clientId, code) {
     params.append("client_id", clientId);
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "https://www.moodtracks.me/yourmoodtracks.html");
+    params.append("redirect_uri", "http://localhost:8080/yourmoodtracks.html");
     params.append("code_verifier", verifier);
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
@@ -83,7 +83,8 @@ async function fetchProfile(token) {
 
 function populateUI(profile) {
     if (profile.items.length > 0) {
-        document.getElementById("displayName").innerText = profile.items[0].name;
+        document.getElementById("songName").innerText = profile.items[0].name;
+        document.getElementById("artistName").innerText = profile.items[0].artists[0].name;
     } else {
         document.getElementById("displayName").innerText = "No top tracks found.";
     }

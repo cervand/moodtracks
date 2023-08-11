@@ -1,5 +1,39 @@
-    .displayName {
-        position: absolute;
-        right: 35vh;
-        bottom: 37vh;
-    }
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.topsongs-imagecontainer{
+    background-image: url(../resources/img/toptracks-week.png);
+    position: relative;
+    width: 300px;
+    height: 534px; 
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+
+.textoverlay-topsongs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+#storyTitle {
+    margin-top: 29px;
+    margin-left: 20px;
+    font-size: 1.6em;
+    color: white;
+}
+
+#songName, #artistName{
+    margin-top: 5px;
+    margin-left: 60px;
+    color: white;
+    font-size: 0.8em;
+    line-height: 1.1;
+}
+
+

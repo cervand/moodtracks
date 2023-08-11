@@ -21,6 +21,7 @@
 
     <link rel="stylesheet" href="styles/nav_styles.css">
     <link rel="stylesheet" href="styles/home_styles.css">
+    <link rel="stylesheet" href="styles/moodtracks_images.css"
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,8 +50,13 @@
     </nav>
 
     <div class="content">
-        <h2>Your top song is: <span id="displayName"></span></h2>
-        <img src="resources/img/toptracks-week.png">
+        <div class="topsongs-imagecontainer">
+            <div class="textoverlay-topsongs">
+                <h1 id="storyTitle">most listened to <br> in the past week</h1> 
+                <span id="songName">Hello there</span>
+                <span id ="artistName">hi there again</span>
+            </div>
+        </div>
     </div>
 
     <script src="scripts/pagemanager.js"> </script>
