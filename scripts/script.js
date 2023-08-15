@@ -92,10 +92,13 @@ function populateUI(profile) {
   
     for (var i = 0; i < profile.items.length; i++) {
       var songName = document.createElement("span");
-      var artistName = document.createElement("span")
+      var artistName = document.createElement("span");
+
+      console.log(profile.items[i].name);
+
       songName.textContent = profile.items[i].name;
       artistName.textContent = profile.items[i].artists[0].name;
       listContainer.appendChild(songName);
-      listContainer.appendChild(artistName)
+      listContainer.appendChild(artistName);
     }
   }
