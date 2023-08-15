@@ -2,6 +2,11 @@ const clientId = "e74c0bff1ca849d5a028a9f445c6ead3"; // Replace with your client
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
+var trackScope = 'short_term'
+var trackLimit = '50'
+
+
+
 if (!code) {
     redirectToAuthCodeFlow(clientId);
 } else {
@@ -69,7 +74,7 @@ export async function getAccessToken(clientId, code) {
 }
 
 async function fetchProfile(token) {
-    const apiCall = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=3';
+    var apiCall = 'https://api.spotify.com/v1/me/top/tracks?time_range=' + trackScope + '&limit=' + trackLimit;
     console.log(apiCall);
 
     const result = await fetch(apiCall, {
@@ -82,24 +87,15 @@ async function fetchProfile(token) {
 }
 
 function populateUI(profile) {
-    if (profile.items.length > 0) {
-        document.getElementById("songName").innerText = profile.items[0].name;
-        document.getElementById("artistName").innerText = profile.items[0].artists[0].name;
-    } else {
-        document.getElementById("displayName").innerText = "No top tracks found.";
+    var listContainer = document.getElementById("songList");
+    listContainer.innerHTML = ""; // Clear previous entries
+  
+    for (var i = 0; i < numEntries && i < stringsArray.length; i++) {
+      var songName = document.createElement("span");
+      var artistName = document.createElement("span")
+      songName.textContent = profile.items[i].name;
+      artistName.textContent = profile.items[i].artists[0].name;
+      listContainer.appendChild(songName);
+      listContainer.appendChild(artistName)
     }
-    /*
-    if (profile.images[0]) {
-        const profileImage = new Image(200, 200);
-        profileImage.src = profile.images[0].url;
-        document.getElementById("avatar").appendChild(profileImage);
-        document.getElementById("imgUrl").innerText = profile.images[0].url;
-    }
-    document.getElementById("id").innerText = profile.id;
-    document.getElementById("email").innerText = profile.email;
-    document.getElementById("uri").innerText = profile.uri;
-    document.getElementById("uri").setAttribute("href", profile.external_urls.spotify);
-    document.getElementById("url").innerText = profile.href;
-    document.getElementById("url").setAttribute("href", profile.href);
-    */
-}
+  }
