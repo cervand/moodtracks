@@ -2,8 +2,9 @@ const clientId = "e74c0bff1ca849d5a028a9f445c6ead3"; // Replace with your client
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
-var trackScope = 'short_term'
-var trackLimit = '50'
+var trackScope = 'short_term';
+var trackLimit = '50';
+var songsToShow = 10;
 
 
 
@@ -90,7 +91,7 @@ function populateUI(profile) {
     var listContainer = document.getElementById("songList");
     listContainer.innerHTML = ""; // Clear previous entries
   
-    for (var i = 0; i < profile.items.length; i++) {
+    for (var i = 0; i < songsToShow; i++) {
       var songName = document.createElement("span");
       var artistName = document.createElement("span");
 
