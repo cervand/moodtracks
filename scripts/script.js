@@ -90,7 +90,7 @@ function populateUI(profile) {
     var listContainer = document.getElementById("songList");
     listContainer.innerHTML = ""; // Clear previous entries
   
-    for (var i = 0; i < trackLimit; i++) {
+    for (var i = 0; i < profile.items.length; i++) {
       var songName = document.createElement("span");
       var artistName = document.createElement("span")
       songName.textContent = profile.items[i].name;
