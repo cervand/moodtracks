@@ -101,5 +101,6 @@ function populateUI(profile) {
       artistName.textContent = profile.items[i].artists[0].name;
       listContainer.appendChild(songName);
       listContainer.appendChild(artistName);
+      listContainer.appendChild(document.createElement("br"));
     }
   }
