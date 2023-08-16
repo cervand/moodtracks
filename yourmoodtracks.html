@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="styles/nav_styles.css">
     <link rel="stylesheet" href="styles/home_styles.css">
-    <link rel="stylesheet" href="styles/moodtracks_images.css"
+    <link rel="stylesheet" href="styles/moodtracks_images.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,14 +48,30 @@
     </nav>
 
     <div class="content">
-        <div class="topsongs">
-            <img src="/resources/img/toptracksback.png" alt="background for story">
-            <div class="top-song-text-overlay">
-                <h1 id="storyTitle">most listened to <br> in the month</h1>
-                <div id="songList">
-
-                </div> 
+        <div class = "top-songs">
+            <span id="top-tracks-title">Top tracks.</span>
+            <div class = "top-songs-options">
+                <span id="top-tracks-options-title">time period</span>
+                <div id="top-tracks-button-row">
+                    <button class="selected-top-tracks-option" id="top-tracks-past-month-button">Month</button>
+                    <button id="top-tracks-past-six-months-button">6 Months</button>
+                    <button id="top-tracks-all-time-button">All Time</button>
+                </div>
             </div>
+            <div class="top-songs-generated-image">
+                <img src="/resources/img/toptracksback.png" alt="background for story">
+                <div class="top-song-text-overlay">
+                    <h1 id="storyTitle">most listened to <br> in <span id="time-period-in-image">the past month</span></h1>
+                    <div id="songList"></div> 
+                </div>
+            </div>
+            <button class="download-top-tracks-image-button">Download Image</button>
+        </div>
+        <div class="moodtracks">
+
+        </div>
+        <div class = "top-rare-music">
+
         </div>
     </div>
 

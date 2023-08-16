@@ -4,13 +4,80 @@
     justify-content: center;
 }
 
-.topsongs{
-    position: relative;
-    width: 300px;
-
+.top-songs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(233, 248, 26);
+    padding: 30px;
+    border-radius: 50px;
 }
 
-.topsongs img {
+#top-tracks-title {
+    align-self: flex-start;
+    font-size: 2.5rem;
+    margin-bottom: 0em;
+    color: black;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.top-songs-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 28px;
+    background-color: white;
+    width: 100%;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#top-tracks-options-title {
+    font-size: 1rem;
+    color: darkslategrey;
+}
+
+#top-tracks-button-row {
+    display: flex;
+    justify-content: center;
+}
+
+#top-tracks-button-row button{
+    padding: 1em;
+    color: black;
+    font-family: Nunito, sans-serif;
+    border: 0px;
+    border-radius: 15px;
+}
+
+#top-tracks-past-six-months-button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#top-tracks-button-row button.selected-top-tracks-option {
+    background-color: orangered;
+    color: white;
+    border-radius: 15px;
+}
+
+#top-tracks-button-row button:hover {
+    background-color: darkslategrey;
+    color: white;
+    transition: 0.1s;
+  }
+
+.top-songs-generated-image{
+    position: relative;
+    width: 300px;
+}
+
+.top-songs-generated-image img {
     width: 100%;
     height: auto;
     display: block;
@@ -56,5 +123,19 @@
     text-align: left;
     font-size: 0.8rem;
     margin-left: 10px;
+}
+
+.download-top-tracks-image-button {
+    background-color: orangered;
+    font-family: Nunito, sans-serif;
+    margin-top: 10px;
+    padding: 20px;
+    border: 0px;
+    color: white;
+    border-radius: 15px;
+}
+
+.download-top-tracks-image-button:hover{
+    background-color: darkred;
 }
 
