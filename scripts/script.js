@@ -5,7 +5,7 @@ const code = params.get("code");
 var trackScope = 'short_term';
 var trackLimit = '50';
 var songsToShow = 10;
-var redirect_uri = "http://www.moodtracks.me/yourmoodtracks.html"
+var redirect_uri = "https://www.moodtracks.me/yourmoodtracks.html"
 
 
 
