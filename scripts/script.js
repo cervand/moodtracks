@@ -5,6 +5,7 @@ const code = params.get("code");
 var trackScope = 'short_term';
 var trackLimit = '50';
 var songsToShow = 10;
+//var redirect_uri = "http://localhost:5500/yourmoodtracks.html"
 
 
 
@@ -26,7 +27,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
-    params.append("redirect_uri", "https://www.moodtracks.me/yourmoodtracks.html");
+    params.append("redirect_uri", "http://localhost:5500/yourmoodtracks.html");
     params.append("scope", "user-read-private user-read-email user-top-read");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
@@ -61,7 +62,7 @@ export async function getAccessToken(clientId, code) {
     params.append("client_id", clientId);
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "https://www.moodtracks.me/yourmoodtracks.html");
+    params.append("redirect_uri", "http://localhost:5500/yourmoodtracks.html");
     params.append("code_verifier", verifier);
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
@@ -88,19 +89,26 @@ async function fetchProfile(token) {
 }
 
 function populateUI(profile) {
-    var listContainer = document.getElementById("songList");
-    listContainer.innerHTML = ""; // Clear previous entries
+    var songList = document.getElementById("songList");
+    songList.innerHTML = ""; // Clear previous entries
   
     for (var i = 0; i < songsToShow; i++) {
-      var songName = document.createElement("span");
-      var artistName = document.createElement("span");
+        var songName = document.createElement("span");
+        var artistName = document.createElement("span");
+        var individualTrackData = document.createElement("div");
+        var rankNumber = document.createElement("span");
 
-      console.log(profile.items[i].name);
+        individualTrackData.setAttribute("id","individualTrackData");
+        rankNumber.setAttribute("id","rankNumber")
 
-      songName.textContent = profile.items[i].name;
-      artistName.textContent = profile.items[i].artists[0].name;
-      listContainer.appendChild(songName);
-      listContainer.appendChild(artistName);
-      listContainer.appendChild(document.createElement("br"));
+        rankNumber.textContent=(i+1).toString();
+        songName.textContent = profile.items[i].name;
+        artistName.textContent = profile.items[i].artists[0].name;
+
+        individualTrackData.appendChild(songName);
+        individualTrackData.appendChild(artistName);
+
+        songList.appendChild(rankNumber)
+        songList.appendChild(individualTrackData);
     }
   }
