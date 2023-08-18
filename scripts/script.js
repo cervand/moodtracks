@@ -171,10 +171,6 @@ async function saveUserLibraryStartingFrom(offset){
     }
 }
 
-function sortTracksBy(attribute){
-
-}
-
 async function populateTopTracks(userTopTrackData, timePeriod) {
     var trackList = document.getElementById("top-tracks-story-track-list");
     trackList.innerHTML = ""; // Clear previous entries
@@ -214,3 +210,41 @@ async function populateTopTracks(userTopTrackData, timePeriod) {
         trackList.appendChild(individualTrackData);
     }
 }
+
+const largeArray = [
+    2,6,4,7
+];
+
+function quickSort(arr, first, last){
+    if(first < last){
+        const pivot = partition(arr, first, last);
+        quickSort(arr, first, pivot-1);
+        quickSort(arr, pivot+1,last);
+    }
+}
+
+function partition(arr, first, last){
+    swap(arr, Math.floor(((last-first)/2) + first), last);
+    const pivotVal = arr[last];
+    var i = first-1;
+
+    for(var j = first; j<last; j++){
+        if(arr[j] <= pivotVal){
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    var pivotPos = i+1
+    swap(arr, last, pivotPos);
+    return pivotPos
+}
+
+function swap(arr, i, j){
+    const tempVal = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tempVal;
+}
+
+console.log("Original Array:", largeArray);
+quickSort(largeArray, 0, largeArray.length-1);
+console.log("Sorted Array:", largeArray);
