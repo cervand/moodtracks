@@ -1,53 +1,69 @@
 .content {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
-.top-songs {
+.track-info-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(233, 248, 26);
     padding: 30px;
     border-radius: 50px;
+    width: 300px;
 }
 
-#top-tracks-title {
+.top-tracks-card{
+    background-color: rgb(233, 248, 26);
+}
+
+.rare-tracks-card{
+    background-color: aqua;
+}
+
+.card-title {
     align-self: flex-start;
     font-size: 2.5rem;
     margin-bottom: 0em;
     color: black;
-    padding-left: 5px;
-    padding-right: 5px;
 }
 
-.top-songs-options {
+.card-description {
+    margin-top: 5px;
+    padding: 12px;
+    background-color: #ffffff;
+    border-radius: 20px 20px 0px 0px;
+    color: black;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.card-options {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
     margin-bottom: 28px;
     background-color: white;
     width: 100%;
-    border-radius: 20px;
+    border-radius: 0px 0px 20px 20px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-#top-tracks-options-title {
+#card-options-title {
     font-size: 1rem;
     color: darkslategrey;
 }
 
-#top-tracks-button-row {
+.card-options-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
-#top-tracks-button-row button{
+.card-options-buttons button{
     padding: 1em;
     color: black;
     font-family: Nunito, sans-serif;
@@ -55,35 +71,30 @@
     border-radius: 15px;
 }
 
-#top-tracks-past-six-months-button {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-#top-tracks-button-row button.selected-top-tracks-option {
+.card-options-buttons .selected-top-tracks-option {
     background-color: orangered;
     color: white;
     border-radius: 15px;
 }
 
-#top-tracks-button-row button:hover {
+.card-options-buttons button:hover {
     background-color: orangered;
     color: white;
     transition: 0.3s;
   }
 
-.top-songs-generated-image{
+.downloadable-story{
     position: relative;
     width: 300px;
 }
 
-.top-songs-generated-image img {
+.downloadable-story img{
     width: 100%;
     height: auto;
     display: block;
 }
 
-.top-song-text-overlay {
+.story-text-overlay {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -91,22 +102,26 @@
     bottom: 0;
 }
 
-#storyTitle {
+#top-tracks-story-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     color: white;
     margin-left: 21px;
     margin-top:32px;
     margin-bottom: 0px;
     font-size: 1.5rem;
+    height: 97px;
 }
 
-#songList {
+#top-tracks-story-track-list {
     color: white;
     display: grid;
     grid-template-columns: 20px auto;
     font-size: 0.1rem;
     margin-left: 19px;
     margin-right: 25px;
-    margin-top:10px;
+    margin-top:3px;
     margin-bottom: 35px;
     height: 100%;
     font-size: 0.68rem;
@@ -121,7 +136,7 @@
     margin-left: 10px;
 }
 
-.download-top-tracks-image-button {
+.download-image-button {
     background-color: orangered;
     font-family: Nunito, sans-serif;
     margin-top: 10px;
@@ -131,18 +146,16 @@
     border-radius: 15px;
 }
 
-.download-top-tracks-image-button:hover{
+.download-image-button:hover{
     background-color: darkred;
 }
 
 
-.moodtracks {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(26, 130, 248);
-    padding: 30px;
-    border-radius: 50px;
+#rare-tracks-story-grid{
+    width: 100%;
+    height: 100%;
+    margin-left: 17px;
+    margin-top: 85px;
+    margin-bottom: 48px;
+    margin-right: 0px;
 }
-

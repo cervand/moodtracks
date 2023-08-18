@@ -48,28 +48,51 @@
     </nav>
 
     <div class="content">
-        <div class = "top-songs">
-            <span id="top-tracks-title">Top tracks.</span>
-            <div class = "top-songs-options">
-                <span id="top-tracks-options-title">time period</span>
-                <div id="top-tracks-button-row">
+        <div class = "track-info-card top-tracks-card">
+            <span class="card-title">Top tracks.</span>
+            <span class="card-description">
+                Here are your top tracks! You can change it to include songs from the past month,
+                six months, or of all time.
+            </span>
+            <div class="downloadable-story">
+                <img src="/resources/img/top-tracks-background-V2.png" alt="Background for story for top tracks">
+                <div class="story-text-overlay">
+                    <h1 id="top-tracks-story-title">My top tracks of the month</span></h1>
+                    <div id="top-tracks-story-track-list"></div> 
+                </div>
+            </div>
+            <div class = "card-options">
+                <span id="card-options-title">time period</span>
+                <div class="card-options-buttons">
                     <button class="selected-top-tracks-option" id="top-tracks-past-month-button">Month</button>
                     <button id="top-tracks-past-six-months-button">6 Months</button>
                     <button id="top-tracks-all-time-button">All Time</button>
                 </div>
             </div>
-            <div class="top-songs-generated-image">
-                <img src="/resources/img/top-tracks-background-V2.png" alt="background for story">
-                <div class="top-song-text-overlay">
-                    <h1 id="storyTitle">most listened to <br> in <span id="time-period-in-image">the past month</span></h1>
-                    <div id="songList"></div> 
+            <button class="download-image-button">Download Image</button>
+        </div>
+
+        <div class="track-info-card rare-tracks-card">
+            <span class="card-title">Rare tracks.</span>
+            <span class="card-description">
+                Explore the most unique songs in your collection.
+                These are the tracks in your library that have been played the least among all Spotify users.
+            </span>
+            <div class="downloadable-story">
+                <img src="/resources/img/raretracks-blanktemplate.png" alt="Background for story for top tracks">
+                <div class="story-text-overlay">
+                    <div id="rare-tracks-story-grid">Hello my friend</div> 
                 </div>
             </div>
-            <button class="download-top-tracks-image-button">Download Image</button>
-        </div>
-        <div class="moodtracks">
-        </div>
-        <div class = "top-rare-music">
+            <div class = "card-options">
+                <span id="card-options-title">time period</span>
+                <div class="card-options-buttons">
+                    <button class="selected-top-tracks-option" id="top-tracks-past-month-button">Month</button>
+                    <button id="top-tracks-past-six-months-button">6 Months</button>
+                    <button id="top-tracks-all-time-button">All Time</button>
+                </div>
+            </div>
+            <button class="download-image-button">Download Image</button>
         </div>
     </div>
 
