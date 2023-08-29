@@ -12,6 +12,11 @@ const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
 
 
+var shortTermUserTracks;
+var mediumTermUserTracks;
+var longTermUserTracks;
+
+
 if (!code) {
     let codeVerifier = generateRandomString(128);
     generateCodeChallenge(codeVerifier).then(codeChallenge => {
@@ -65,13 +70,18 @@ else {
 
 
 
-    var shortTermUserTracks = await getUserTopTracks('short_term', trackLimit);
-    var mediumTermUserTracks = await getUserTopTracks('medium_term', trackLimit);
-    var longTermUserTracks = await getUserTopTracks('long_term', trackLimit);
+    shortTermUserTracks = await getUserTopTracks('short_term', trackLimit);
+    mediumTermUserTracks = await getUserTopTracks('medium_term', trackLimit);
+    longTermUserTracks = await getUserTopTracks('long_term', trackLimit);
 
-    populateTopTracks(shortTermUserTracks, "short");
-    //saveUserLibraryStartingFrom(0);
-    //console.log(fullUserTrackList);
+
+    await populateTopTracks(shortTermUserTracks, "short");
+    await populateMoodtracks(shortTermUserTracks);
+
+    var newArr = quickSort(await saveUserLibraryStartingFrom(0), 0, fullUserTrackList.length-1);
+
+    await populateRareTracks();
+    console.log(fullUserTrackList);
 }
 
 var shortTermButton = document.querySelector('#top-tracks-past-month-button');
@@ -156,7 +166,7 @@ async function getResponse(apiCall){
 async function saveUserLibraryStartingFrom(offset){
     var userLibrarySegment = await getResponse('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset);
 
-    for(var i = 0; i <= userLibrarySegment.items.length; i++){
+    for(var i = 0; i < userLibrarySegment.items.length; i++){
         fullUserTrackList.push(userLibrarySegment.items[i]);
     }
     console.log(userLibrarySegment.next);
@@ -206,14 +216,10 @@ async function populateTopTracks(userTopTrackData, timePeriod) {
         individualTrackData.appendChild(trackName);
         individualTrackData.appendChild(artistName);
 
-        trackList.appendChild(rankNumber)
+        trackList.appendChild(rankNumber);
         trackList.appendChild(individualTrackData);
     }
 }
-
-const largeArray = [
-    2,6,4,7
-];
 
 function quickSort(arr, first, last){
     if(first < last){
@@ -225,11 +231,11 @@ function quickSort(arr, first, last){
 
 function partition(arr, first, last){
     swap(arr, Math.floor(((last-first)/2) + first), last);
-    const pivotVal = arr[last];
+    const pivotVal = arr[last].track.popularity;
     var i = first-1;
 
     for(var j = first; j<last; j++){
-        if(arr[j] <= pivotVal){
+        if(arr[j].track.popularity <= pivotVal){
             i++;
             swap(arr, i, j);
         }
@@ -245,6 +251,122 @@ function swap(arr, i, j){
     arr[j] = tempVal;
 }
 
-console.log("Original Array:", largeArray);
-quickSort(largeArray, 0, largeArray.length-1);
-console.log("Sorted Array:", largeArray);
+
+async function populateRareTracks(){
+    var topThree = [];
+    var libraryIndex = 0;
+    var topThreeIndex = 0;
+
+    var img1 = document.getElementsByClassName("album-img1")[0];
+    var img2 = document.getElementsByClassName("album-img2")[0];
+    var img3 = document.getElementsByClassName("album-img3")[0];  
+
+    var track1 = document.getElementsByClassName("rare-track1")[0];
+    var track2 = document.getElementsByClassName("rare-track2")[0];
+    var track3 = document.getElementsByClassName("rare-track3")[0]; 
+
+    track1.innerHTML = "";
+    track2.innerHTML = ""; 
+    track3.innerHTML = "";
+
+    while(topThreeIndex < 3){
+        if(fullUserTrackList[libraryIndex].track.popularity > 0){
+            topThree.push(fullUserTrackList[libraryIndex]);
+            topThreeIndex++;
+        }
+        libraryIndex++;
+    }
+
+
+    for(var i = 0; i < topThree.length;i++){
+        var trackName = document.createElement("span");
+        var artistName = document.createElement("span");
+
+        artistName.classList.add("raretracks-artist");
+        trackName.classList.add("raretracks-track");
+
+
+        trackName.textContent = topThree[i].track.name;
+        artistName.textContent = topThree[i].track.artists[0].name;
+
+        if(i == 0){
+            track1.appendChild(trackName);
+            track1.appendChild(artistName);
+        }
+        if(i == 1){
+            track2.appendChild(trackName);
+            track2.appendChild(artistName);
+        }
+        if(i == 2){
+            track3.appendChild(trackName);
+            track3.appendChild(artistName);
+        }
+    }
+
+    img1.setAttribute("src", topThree[0].track.album.images[0].url);
+    img2.setAttribute("src", topThree[1].track.album.images[1].url);
+    img3.setAttribute("src", topThree[2].track.album.images[2].url);
+}
+
+async function populateMoodtracks(tracksToSort){
+    //traverse tracks to sort
+    //sort tracks based on their +valence
+    //sort tracks based on their -valence
+    //sort tracks based on their +energy
+
+
+    var happyGrid = document.getElementById("moodtracks-happy-grid");
+    var tenderGrid = document.getElementById("moodtracks-tender-grid");
+    var energeticGrid = document.getElementById("moodtracks-energetic-grid");
+
+    var moodtracksSectors = [happyGrid,tenderGrid,energeticGrid];
+
+    for(var i =0; i< 3; i++){
+        for(var j = 0; j<3;j++){
+            var trackNameSpan = document.createElement("span");
+            var artistNameSpan = document.createElement("span");
+            trackNameSpan.setAttribute("id", "moodtracks-artist");
+            artistNameSpan.setAttribute("id", "moodtracks-artist");
+
+            var trackInfoDiv = document.createElement("div");
+            var albumImg = document.createElement("img");
+            albumImg.classList.add("moodtracks-album-img");
+
+
+
+            var trackName = tracksToSort.items[j].name;
+            var artistName = tracksToSort.items[j].artists[0].name;
+            var albumURL = tracksToSort.items[j].album.images[0].url;
+
+            trackNameSpan.textContent = trackName;
+            artistNameSpan.textContent=artistName;
+            albumImg.setAttribute("src", albumURL);
+
+
+
+            trackInfoDiv.appendChild(trackNameSpan);
+            trackInfoDiv.appendChild(artistNameSpan);
+
+
+            if(i==1){
+                moodtracksSectors[i].appendChild(albumImg);
+                moodtracksSectors[i].appendChild(trackInfoDiv);
+            }
+            else{
+                moodtracksSectors[i].appendChild(trackInfoDiv);
+                moodtracksSectors[i].appendChild(albumImg);
+            }
+        }
+    }
+
+
+    //get and set artistName to a span with id moodtracks-artist
+    //get and set trackName to a span with id moodtracks-artist
+    //create a div called "trackInfo" append artistName and trackName
+    //create an img element wit class "moodtracks-album-img"
+    //create a new div called "trackRow" append trackInfo or img depending on i
+    
+
+    //append trackRow to respective div
+
+}

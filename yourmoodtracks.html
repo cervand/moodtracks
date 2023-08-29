@@ -21,11 +21,11 @@
 
     <link rel="stylesheet" href="styles/nav_styles.css">
     <link rel="stylesheet" href="styles/home_styles.css">
-    <link rel="stylesheet" href="styles/moodtracks_images.css">
+    <link rel="stylesheet" href="styles/moodtracks_cards.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,800;0,900;1,700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -81,15 +81,47 @@
             <div class="downloadable-story">
                 <img src="/resources/img/raretracks-blanktemplate.png" alt="Background for story for top tracks">
                 <div class="story-text-overlay">
-                    <div id="rare-tracks-story-grid">Hello my friend</div> 
+                    <div id="rare-tracks-story-grid">
+                        <img class="album-img1" src="">
+                        <span class="rare-track1"></span>
+                        <span class="rare-track2">Fetching and scanning your Spotify library, please wait!</span>
+                        <img class="album-img2" src="">
+                        <img class="album-img3" src="">
+                        <span class="rare-track3"></span>
+
+                    </div> 
                 </div>
             </div>
             <div class = "card-options">
-                <span id="card-options-title">time period</span>
+                <span id="card-options-title"></span>
                 <div class="card-options-buttons">
-                    <button class="selected-top-tracks-option" id="top-tracks-past-month-button">Month</button>
-                    <button id="top-tracks-past-six-months-button">6 Months</button>
-                    <button id="top-tracks-all-time-button">All Time</button>
+                    <button class="selected-rare-tracks-option" id="rare-tracks-past-month-button">Get New List</button>
+                </div>
+            </div>
+            <button class="download-image-button">Download Image</button>
+        </div>
+
+        <div class="track-info-card moodtracks-card">
+            <span class="card-title">moodtracks.</span>
+            <span class="card-description">
+                Have you wondered how your top songs are sorted, moodwise? These are your top three for each mood! (More moods coming soon!)
+            </span>
+            <div class="downloadable-story">
+                <img src="/resources/img/moodtracks-blankTemplate.png" alt="Background for story for top tracks">
+                <div class="story-text-overlay">
+                    <div id="moodtracks-story-grid">
+                        <div id="moodtracks-happy-grid"></div>
+                        <div id="moodtracks-tender-grid"></div>
+                        <div id="moodtracks-energetic-grid"></div>
+                    </div> 
+                </div>
+            </div>
+            <div class = "card-options">
+                <span id="card-options-title"></span>
+                <div class="card-options-buttons">
+                    <button class="selected-moodtracks-option" id="moodtracks-past-month-button">Month</button>
+                    <button id="moodtracks-past-six-months-button">6 Months</button>
+                    <button id="moodtracks-all-time-button">All Time</button>
                 </div>
             </div>
             <button class="download-image-button">Download Image</button>
