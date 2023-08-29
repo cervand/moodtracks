@@ -238,7 +238,7 @@
 }
 
 .moodtracks-track-info{
-
+    display:flex;
 }
 
 .moodtracks-artist{
