@@ -55,7 +55,7 @@
                 six months, or of all time.
             </span>
             <div class="downloadable-story">
-                <img src="/resources/img/top-tracks-background-V2.png" alt="Background for story for top tracks">
+                <img src="/resources/img/top-tracks-background-V2.png" alt="Background for story for top tracks" class="story-background">
                 <div class="story-text-overlay">
                     <h1 id="top-tracks-story-title">My top tracks of the month</span></h1>
                     <div id="top-tracks-story-track-list"></div> 
@@ -79,12 +79,15 @@
                 These are the tracks in your library that have been played the least among all Spotify users.
             </span>
             <div class="downloadable-story">
-                <img src="/resources/img/raretracks-blanktemplate.png" alt="Background for story for top tracks">
+                <img src="/resources/img/raretracks-blanktemplate.png" alt="Background for story for top tracks" class="story-background">
                 <div class="story-text-overlay">
+                    <span id = "rare-tracks-loading-text" style="color: white; position: absolute; left: 95px; top: 400px; background-color: rgb(53, 53, 53); padding: 25px; border-radius: 20px;"> 
+                        Loading
+                    </span>
                     <div id="rare-tracks-story-grid">
                         <img class="album-img1" src="">
                         <span class="rare-track1"></span>
-                        <span class="rare-track2">Fetching and scanning your Spotify library, please wait!</span>
+                        <span class="rare-track2"></span>
                         <img class="album-img2" src="">
                         <img class="album-img3" src="">
                         <span class="rare-track3"></span>
@@ -95,7 +98,7 @@
             <div class = "card-options">
                 <span id="card-options-title"></span>
                 <div class="card-options-buttons">
-                    <button class="selected-rare-tracks-option" id="rare-tracks-past-month-button">Get New List</button>
+                    <button class="selected-rare-tracks-option" id="rare-tracks-refresh-button">Get New List</button>
                 </div>
             </div>
             <button class="download-image-button">Download Image</button>
@@ -107,8 +110,11 @@
                 Have you wondered how your top songs are sorted, moodwise? These are your top three for each mood! (More moods coming soon!)
             </span>
             <div class="downloadable-story">
-                <img src="/resources/img/moodtracks-blankTemplate.png" alt="Background for story for top tracks">
+                <img src="/resources/img/moodtracks-blankTemplate.png" alt="Background for story for top tracks" class="story-background">
                 <div class="story-text-overlay">
+                    <span id = moodtracks-loading-text style="color: white; position: absolute; left: 100px; top: 400px; background-color: rgb(53, 53, 53); padding: 25px; border-radius: 20px;"> 
+                        Loading
+                    </span>
                     <div id="moodtracks-story-grid">
                         <div id="moodtracks-happy-grid"></div>
                         <div id="moodtracks-tender-grid"></div>
@@ -118,7 +124,7 @@
             </div>
             <div class = "card-options">
                 <span id="card-options-title"></span>
-                <div class="card-options-buttons">
+                <div class="card-options-buttons moodtracks-options">
                     <button class="selected-moodtracks-option" id="moodtracks-past-month-button">Month</button>
                     <button id="moodtracks-past-six-months-button">6 Months</button>
                     <button id="moodtracks-all-time-button">All Time</button>

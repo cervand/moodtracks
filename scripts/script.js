@@ -1,4 +1,4 @@
-const clientId = "e74c0bff1ca849d5a028a9f445c6ead3"; // Replace with your client ID
+const clientId = "0398c81e44224813ba198d3e48e98556"; // Replace with your client ID
 const redirectUri = "http://localhost:5500/yourmoodtracks.html";
 const apiScope = "user-read-private user-read-email user-top-read user-library-read";
 
@@ -11,6 +11,18 @@ var shortTermUserTracks;
 var mediumTermUserTracks;
 var longTermUserTracks;
 var fullUserTrackList = [];
+
+var shortTermButtonTT = document.querySelector('#top-tracks-past-month-button');
+var mediumTermButtonTT = document.querySelector('#top-tracks-past-six-months-button');
+var longTermButtonTT = document.querySelector('#top-tracks-all-time-button');
+var topTracksOptionsButtons = [shortTermButtonTT,mediumTermButtonTT, longTermButtonTT];
+
+var shortTermButtonMT = document.querySelector('#moodtracks-past-month-button');
+var medTermButtonMT = document.querySelector('#moodtracks-past-six-months-button');
+var longTermButtonMT = document.querySelector('#moodtracks-all-time-button');
+var mtOptionsButtons = [shortTermButtonMT, medTermButtonMT, longTermButtonMT];
+
+var rareTracksRefreshButton = document.querySelector('#rare-tracks-refresh-button');
 
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
@@ -71,41 +83,94 @@ else {
     shortTermUserTracks = await getUserTopTracks('short_term', trackLimit);
     mediumTermUserTracks = await getUserTopTracks('medium_term', trackLimit);
     longTermUserTracks = await getUserTopTracks('long_term', trackLimit);
+    populateTopTracks(shortTermUserTracks, "short");
+    addTopTracksEventListeners()
 
-    await populateTopTracks(shortTermUserTracks, "short");
-    console.log("before moodtracks");
-    await populateMoodtracks(shortTermUserTracks);
-    console.log("After moodtracks");
-    quickSort(await saveUserLibraryStartingFrom(0), 0, fullUserTrackList.length-1);
-    await populateRareTracks();
+    var valenceTFPShort = await getTrackFeaturePairArr(shortTermUserTracks);
+    var energyTFPShort = JSON.parse(JSON.stringify(valenceTFPShort));
+
+    
+    var valenceTFPMed = await getTrackFeaturePairArr(mediumTermUserTracks);
+    var energyTFPMed = JSON.parse(JSON.stringify(valenceTFPMed));
+
+    var valenceTFPLong = await getTrackFeaturePairArr(longTermUserTracks);
+    var energyTFPLong = JSON.parse(JSON.stringify(valenceTFPLong));
+    
+    quickSortValence(valenceTFPShort, 0, valenceTFPShort.length-1);
+    quickSortEnergy(energyTFPShort, 0, energyTFPShort.length-1);
+
+    populateMoodtracks(await valenceTFPShort, await energyTFPShort);
+    document.getElementById("moodtracks-loading-text").remove()
+    addMoodtracksEventListeners();
+    
+    //quickSort(await saveUserLibraryStartingFrom(0), 0, fullUserTrackList.length-1);
+    //await populateRareTracks();
+    //document.getElementById("#rare-tracks-loading-text").remove()
+    
+
 }
 
-var shortTermButton = document.querySelector('#top-tracks-past-month-button');
-shortTermButton.addEventListener('click', function () {
-    populateTopTracks(shortTermUserTracks, "short");
-    removeAllCurrentHighlightedButtons();
-    shortTermButton.classList.add("selected-top-tracks-option");
-});
+// Event listeners for option buttons in top tracks card. Handle updating the top tracks card. 
+function addTopTracksEventListeners(){
+    shortTermButtonTT.addEventListener('click', function () {
+        populateTopTracks(shortTermUserTracks, "short");
+        removeButtonHighlightFrom(topTracksOptionsButtons,"top-tracks");
+        shortTermButtonTT.classList.add("selected-top-tracks-option");
+    });
 
-var mediumTermButton = document.querySelector('#top-tracks-past-six-months-button');
-mediumTermButton.addEventListener('click', function () {
-    populateTopTracks(mediumTermUserTracks, "medium");
-    removeAllCurrentHighlightedButtons();
-    mediumTermButton.classList.add("selected-top-tracks-option");
-});
+    mediumTermButtonTT.addEventListener('click', function () {
+        populateTopTracks(mediumTermUserTracks, "medium");
+        removeButtonHighlightFrom(topTracksOptionsButtons,"top-tracks");
+        mediumTermButtonTT.classList.add("selected-top-tracks-option");
+    });
 
-var longTermButton = document.querySelector('#top-tracks-all-time-button');
-longTermButton.addEventListener('click', function () {
-    populateTopTracks(longTermUserTracks, "long");
-    removeAllCurrentHighlightedButtons();
-    longTermButton.classList.add("selected-top-tracks-option");
-});
+    longTermButtonTT.addEventListener('click', function () {
+        populateTopTracks(longTermUserTracks, "long");
+        removeButtonHighlightFrom(topTracksOptionsButtons,"top-tracks");
+        longTermButtonTT.classList.add("selected-top-tracks-option");
+    });
+}
+
+// Event listeners for option buttons in moodtracks card
+function addMoodtracksEventListeners(){
+    
+    shortTermButtonMT.addEventListener('click', function () {
+        populateMoodtracks(valenceTFPShort, energyTFPShort);
+        removeButtonHighlightFrom(mtOptionsButtons,"moodtracks");
+        shortTermButtonMT.classList.add("selected-moodtracks-option");
+    });
+
+    
+    medTermButtonMT.addEventListener('click', function () {
+        populateMoodtracks(valenceTFPMed, energyTFPMed);
+        removeButtonHighlightFrom(mtOptionsButtons,"moodtracks");
+        medTermButtonMT.classList.add("selected-moodtracks-option");
+    });
+
+    
+    longTermButtonMT.addEventListener('click', function () {
+        populateMoodtracks(valenceTFPLong, energyTFPLong);
+        removeButtonHighlightFrom(mtOptionsButtons,"moodtracks");
+        longTermButtonMT.classList.add("selected-moodtracks-option");
+    });
+}
 
 
-function removeAllCurrentHighlightedButtons(){
-    shortTermButton.classList.remove("selected-top-tracks-option");
-    mediumTermButton.classList.remove("selected-top-tracks-option");
-    longTermButton.classList.remove("selected-top-tracks-option");
+function removeButtonHighlightFrom(buttonArr, card){
+    for(var i = 0; i<buttonArr.length;i++){
+        switch(card){
+            case "top-tracks":
+                buttonArr[i].classList.remove("selected-top-tracks-option");
+                break;
+            case "moodtracks":
+                buttonArr[i].classList.remove("selected-moodtracks-option");
+                break;
+            case "rare-tracks":
+                buttonArr[i].classList.remove("selected-top-tracks-option");
+                break;
+        }
+        
+    }
 }
 
 function generateRandomString(length) {
@@ -143,6 +208,8 @@ async function getUserTopTracks(timePeriod, trackListLength) {
         }
     });
 
+    
+
     return await response.json();
 }
 
@@ -173,46 +240,6 @@ async function saveUserLibraryStartingFrom(offset){
     }
     else{
         return fullUserTrackList;
-    }
-}
-
-async function populateTopTracks(userTopTrackData, timePeriod) {
-    var trackList = document.getElementById("top-tracks-story-track-list");
-    trackList.innerHTML = ""; // Clear previous entries
-
-    var topTrackTitle = document.getElementById("top-tracks-story-title");
-    
-    switch(timePeriod){
-        case "short":
-            topTrackTitle.innerHTML="My top tracks of the past month";
-            break;
-        case "medium":
-            topTrackTitle.innerHTML="My top tracks of the past six months";
-            break;
-        case "long":
-            topTrackTitle.innerHTML="My top tracks of all time";
-            break;
-    }
-
-    for (var i = 0; i < displayedTrackListLimit; i++) {
-        var trackName = document.createElement("span");
-        var artistName = document.createElement("span");
-        var individualTrackData = document.createElement("div");
-        var rankNumber = document.createElement("span");
-
-        individualTrackData.setAttribute("id", "individualTrackData");
-        artistName.setAttribute("id", "artistName");
-        rankNumber.setAttribute("id", "rankNumber");
-
-        rankNumber.textContent = (i + 1).toString();
-        trackName.textContent = userTopTrackData.items[i].name +' - ';
-        artistName.textContent = userTopTrackData.items[i].artists[0].name;
-
-        individualTrackData.appendChild(trackName);
-        individualTrackData.appendChild(artistName);
-
-        trackList.appendChild(rankNumber);
-        trackList.appendChild(individualTrackData);
     }
 }
 
@@ -249,13 +276,15 @@ function quickSortValence(arr, first, last){
 }
 
 function partitionValence(arr, first, last){
+    //console.log("this is the last element");
+    //console.log(arr[last]);
     swap(arr, Math.floor(((last-first)/2) + first), last);
-    const pivotVal = arr[last][1].audio_features[0].valence;
-    console.log("The pivot value is " + pivotVal.toString());
+    const pivotVal = arr[last][1].valence;
+    //console.log("The pivot value is " + pivotVal.toString());
     var i = first-1;
 
     for(var j = first; j<last; j++){
-        if(arr[j][1].audio_features[0].valence <= pivotVal){
+        if(arr[j][1].valence <= pivotVal){
             i++;
             swap(arr, i, j);
         }
@@ -276,12 +305,12 @@ function quickSortEnergy(arr, first, last){
 
 function partitionEnergy(arr, first, last){
     swap(arr, Math.floor(((last-first)/2) + first), last);
-    const pivotVal = arr[last][1].audio_features[0].energy;
-    console.log("The pivot value is " + pivotVal.toString());
+    const pivotVal = arr[last][1].energy;
+    //console.log("The pivot value is " + pivotVal.toString());
     var i = first-1;
 
     for(var j = first; j<last; j++){
-        if(arr[j][1].audio_features[0].energy <= pivotVal){
+        if(arr[j][1].energy <= pivotVal){
             i++;
             swap(arr, i, j);
         }
@@ -299,38 +328,52 @@ function swap(arr, i, j){
 }
 
 async function getSongFeaturesWithID(id){
+    
     var apicall = "https://api.spotify.com/v1/audio-features?ids=" + id;
+    console.log(apicall);
     return await getResponse(apicall);
 }
 
 async function getTrackFeaturePairArr(tracks){
     var trackFeaturePair = [];
+    var idList = "";
+
+    console.log(tracks.items.length);
     
-    for(var i =0; i<tracks.items.length; i++){
-        trackFeaturePair.push([tracks.items[i], await getSongFeaturesWithID(tracks.items[i].id)]);
+
+    for(var j = 0; j<50; j++){
+        console.log(j);
+        idList = idList + tracks.items[j].id + ",";   
     }
 
+    console.log(idList);
+    idList = idList.substring(0,idList.length-1);
+    console.log(idList);
+
+
+    var response = await getSongFeaturesWithID(idList);
+    console.log(response);
+
+    for(var i =0; i<response.audio_features.length; i++){
+        trackFeaturePair.push([tracks.items[i], response.audio_features[i]]);
+    }
+
+    console.log(trackFeaturePair);
     return trackFeaturePair;
 }
 
+async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePair){
+    console.log("populating moodtracks");
+    console.log(valenceTrackFeaturePair);
+    console.log(energyTrackFeaturePair);
+
+    const valenceListLength = valenceTrackFeaturePair.length;
+    const energyListLength = energyTrackFeaturePair.length;
 
 
-async function populateMoodtracks(trackList){
-    var valenceSortedTracklist = await getTrackFeaturePairArr(trackList);
-    var energySortedTracklist = JSON.parse(JSON.stringify(valenceSortedTracklist));
-    quickSortValence(valenceSortedTracklist, 0, valenceSortedTracklist.length-1);
-    quickSortEnergy(energySortedTracklist, 0, energySortedTracklist.length-1);
-
-    console.log(valenceSortedTracklist);
-    console.log(energySortedTracklist);
-
-    const valenceListLength = valenceSortedTracklist.length;
-    const energyListLength = energySortedTracklist.length;
-
-
-    var topHappySongs = [valenceSortedTracklist[valenceListLength-1][0],valenceSortedTracklist[valenceListLength-2][0],valenceSortedTracklist[valenceListLength-3][0]];;
-    var topTenderSongs = [energySortedTracklist[0][0],energySortedTracklist[1][0],energySortedTracklist[2][0]];
-    var topEnergeticSongs = [energySortedTracklist[energyListLength-1][0],energySortedTracklist[energyListLength-2][0],energySortedTracklist[energyListLength-3][0]];;
+    var topHappySongs = [valenceTrackFeaturePair[valenceListLength-1][0],valenceTrackFeaturePair[valenceListLength-2][0],valenceTrackFeaturePair[valenceListLength-3][0]];;
+    var topTenderSongs = [energyTrackFeaturePair[0][0],energyTrackFeaturePair[1][0],energyTrackFeaturePair[2][0]];
+    var topEnergeticSongs = [energyTrackFeaturePair[energyListLength-1][0],energyTrackFeaturePair[energyListLength-2][0],energyTrackFeaturePair[energyListLength-3][0]];;
 
 
     var happyGrid = document.getElementById("moodtracks-happy-grid");
@@ -339,14 +382,22 @@ async function populateMoodtracks(trackList){
 
     var moodtracksSectors = [happyGrid,tenderGrid,energeticGrid];
 
+    console.log(moodtracksSectors);
+    console.log(topHappySongs);
+
+    
+
+
     for(var i =0; i< 3; i++){
+        moodtracksSectors[i].innerHTML = "";
         for(var j = 0; j<3;j++){
             var trackNameSpan = document.createElement("span");
             var artistNameSpan = document.createElement("span");
-            trackNameSpan.setAttribute("id", "moodtracks-artist");
+            trackNameSpan.setAttribute("id", "moodtracks-track");
             artistNameSpan.setAttribute("id", "moodtracks-artist");
 
             var trackInfoDiv = document.createElement("div");
+            trackInfoDiv.classList.add("moodtracks-track-info")
             var albumImg = document.createElement("img");
             albumImg.classList.add("moodtracks-album-img");
 
@@ -373,7 +424,7 @@ async function populateMoodtracks(trackList){
             albumImg.setAttribute("src", albumURL);
 
 
-
+            
             trackInfoDiv.appendChild(trackNameSpan);
             trackInfoDiv.appendChild(artistNameSpan);
 
@@ -381,6 +432,8 @@ async function populateMoodtracks(trackList){
             if(i==1){
                 moodtracksSectors[i].appendChild(albumImg);
                 moodtracksSectors[i].appendChild(trackInfoDiv);
+
+                
             }
             else{
                 moodtracksSectors[i].appendChild(trackInfoDiv);
@@ -389,18 +442,8 @@ async function populateMoodtracks(trackList){
         }
     }
 
-
-    //get and set artistName to a span with id moodtracks-artist
-    //get and set trackName to a span with id moodtracks-artist
-    //create a div called "trackInfo" append artistName and trackName
-    //create an img element wit class "moodtracks-album-img"
-    //create a new div called "trackRow" append trackInfo or img depending on i
-    
-
-    //append trackRow to respective div
-
+    adjustFontSizingMoodtracks(45.10, 10);
 }
-
 
 async function populateRareTracks(){
     var topThree = [];
@@ -456,4 +499,67 @@ async function populateRareTracks(){
     img1.setAttribute("src", topThree[0].track.album.images[0].url);
     img2.setAttribute("src", topThree[1].track.album.images[1].url);
     img3.setAttribute("src", topThree[2].track.album.images[2].url);
+}
+
+async function populateTopTracks(userTopTrackData, timePeriod) {
+    var trackList = document.getElementById("top-tracks-story-track-list");
+    trackList.innerHTML = ""; // Clear previous entries
+
+    var topTrackTitle = document.getElementById("top-tracks-story-title");
+    
+    switch(timePeriod){
+        case "short":
+            topTrackTitle.innerHTML="My top tracks of the past month";
+            break;
+        case "medium":
+            topTrackTitle.innerHTML="My top tracks of the past six months";
+            break;
+        case "long":
+            topTrackTitle.innerHTML="My top tracks of all time";
+            break;
+    }
+
+    for (var i = 0; i < displayedTrackListLimit; i++) {
+        var trackName = document.createElement("span");
+        var artistName = document.createElement("span");
+        var individualTrackData = document.createElement("div");
+        var rankNumber = document.createElement("span");
+
+        individualTrackData.setAttribute("id", "individualTrackData");
+        artistName.setAttribute("id", "artistName");
+        rankNumber.setAttribute("id", "rankNumber");
+
+        rankNumber.textContent = (i + 1).toString();
+        trackName.textContent = userTopTrackData.items[i].name +' - ';
+        artistName.textContent = userTopTrackData.items[i].artists[0].name;
+
+        individualTrackData.appendChild(trackName);
+        individualTrackData.appendChild(artistName);
+
+        trackList.appendChild(rankNumber);
+        trackList.appendChild(individualTrackData);
+    }
+}
+function adjustFontSizingMoodtracks(threshold, newFontSize){
+    console.log(newFontSize)
+    var isDone = 1;
+    var elmnt = document.getElementsByClassName("moodtracks-track-info");
+    newFontSize = newFontSize - 2;
+
+    for(var i = 0; i < elmnt.length; i++){
+        console.log(elmnt[i].textContent);
+        console.log(elmnt[i].offsetHeight);
+        console.log(threshold);
+        if(elmnt[i].offsetHeight > threshold){
+            var spans = elmnt[i].getElementsByTagName("span");
+            for (var j = 0; j < spans.length; j++) {
+                spans[j].style.fontSize = newFontSize + "px";
+            }
+            isDone = 0;
+        }
+    }
+
+    if(!isDone){
+        adjustFontSizingMoodtracks(threshold, newFontSize);
+    }
 }

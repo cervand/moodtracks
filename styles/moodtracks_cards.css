@@ -69,7 +69,6 @@
 
 .card-options-buttons button{
     padding: 1em;
-    color: black;
     font-family: Nunito, sans-serif;
     border: 0px;
     border-radius: 15px;
@@ -92,7 +91,7 @@
     width: 300px;
 }
 
-.downloadable-story img{
+.story-background{
     width: 100%;
     height: auto;
     display: block;
@@ -104,6 +103,7 @@
     flex-direction: column;
     top: 0;
     bottom: 0;
+    width: 100%;
 }
 
 #top-tracks-story-title {
@@ -127,7 +127,7 @@
     margin-left: 19px;
     margin-right: 25px;
     margin-top:3px;
-    margin-bottom: 35px;
+    margin-bottom: 41px;
     height: 100%;
     font-size: 0.68rem;
 }
@@ -166,7 +166,7 @@
     background-color: white;
 }
 
-.album-img1 .album-img2 .album-img3{
+#rare-tracks-story-grid img{
     width: 133.3px;
     height: 133.3px;
 }
@@ -196,55 +196,71 @@
 #moodtracks-story-grid{
     display: flex;
     flex-direction: column;
+    margin-top: 76.7px;
+    margin-right: 14px;
+    margin-left: 14.24px;
 }
 
-#moodtracks-happy-grid{
+#moodtracks-happy-grid, #moodtracks-energetic-grid{
     display: grid;
-    grid-template-columns: 133px 133px;
-    margin-left: 17px;
-    margin-top: 85px;
-    margin-bottom: 48px;
-    margin-right: 16px;
-    background-color: white;
+    grid-template-columns: 180px 45.85px;
+    align-items: center;
+    justify-items: end;
+    align-self: end;
 }
 
 #moodtracks-tender-grid{
     display: grid;
-    grid-template-columns: 133px 133px;
-    margin-left: 17px;
-    margin-top: 85px;
-    margin-bottom: 48px;
-    margin-right: 16px;
-    background-color: white;
-}
-
-#moodtracks-energetic-grid{
-    display: grid;
-    grid-template-columns: 133px 133px;
-    margin-left: 17px;
-    margin-top: 85px;
-    margin-bottom: 48px;
-    margin-right: 16px;
-    background-color: white;
-}
-
-.moodtracks-album-img {
-    width: 165px;
-    height: 165px;
-}
-
-.moodtracks-track{
-    font-weight:800;
-    text-align: left;
+    grid-template-columns: 45.85px 180px;
+    align-items: center;
+    justify-items: start;
+    align-self: start;
 }
 
 .moodtracks-track-info{
     display:flex;
+    flex-direction: column;
 }
 
-.moodtracks-artist{
+#moodtracks-happy-grid .moodtracks-track-info, #moodtracks-energetic-grid .moodtracks-track-info{
+    align-items: end;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#moodtracks-happy-grid .moodtracks-track-info span, #moodtracks-energetic-grid .moodtracks-track-info span{
+    text-align: end;
+}
+
+#moodtracks-tender-grid .moodtracks-track-info{
+    align-items: start;
+    margin-left: 10px;
+    margin-left: 10px;
+}
+
+.moodtracks-album-img {
+    width: 45.85px;
+    height: 45.85px;
+}
+
+
+
+#moodtracks-track{
+    font-weight:800;
+    text-align: left;
+    font-size: 0.7rem;
+    color: white;
+}
+
+#moodtracks-artist{
     font-weight:800;
     font-style: italic;
     text-align: center;
-    text-decoration: underline;
+    font-size: 0.7rem;
+    color: white;
+}
+
+.selected-moodtracks-option {
+    background-color: orangered;
+    color: white;
 }
