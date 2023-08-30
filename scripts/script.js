@@ -5,17 +5,15 @@ const apiScope = "user-read-private user-read-email user-top-read user-library-r
 var trackScope = 'short_term';
 const trackLimit = '50';
 const displayedTrackListLimit = 10;
-var fullUserTrackList = [];
-var loadedUserTracks = false;
-
-const urlParams = new URLSearchParams(window.location.search);
-let code = urlParams.get('code');
 
 
 var shortTermUserTracks;
 var mediumTermUserTracks;
 var longTermUserTracks;
+var fullUserTrackList = [];
 
+const urlParams = new URLSearchParams(window.location.search);
+let code = urlParams.get('code');
 
 if (!code) {
     let codeVerifier = generateRandomString(128);
@@ -74,14 +72,12 @@ else {
     mediumTermUserTracks = await getUserTopTracks('medium_term', trackLimit);
     longTermUserTracks = await getUserTopTracks('long_term', trackLimit);
 
-
     await populateTopTracks(shortTermUserTracks, "short");
+    console.log("before moodtracks");
     await populateMoodtracks(shortTermUserTracks);
-
-    var newArr = quickSort(await saveUserLibraryStartingFrom(0), 0, fullUserTrackList.length-1);
-
+    console.log("After moodtracks");
+    quickSort(await saveUserLibraryStartingFrom(0), 0, fullUserTrackList.length-1);
     await populateRareTracks();
-    console.log(fullUserTrackList);
 }
 
 var shortTermButton = document.querySelector('#top-tracks-past-month-button');
@@ -176,7 +172,6 @@ async function saveUserLibraryStartingFrom(offset){
         return await saveUserLibraryStartingFrom(offset+50);
     }
     else{
-        loadedUserTracks=true;
         return fullUserTrackList;
     }
 }
@@ -245,10 +240,165 @@ function partition(arr, first, last){
     return pivotPos
 }
 
+function quickSortValence(arr, first, last){
+    if(first < last){
+        const pivot = partitionValence(arr, first, last);
+        quickSortValence(arr, first, pivot-1);
+        quickSortValence(arr, pivot+1,last);
+    }
+}
+
+function partitionValence(arr, first, last){
+    swap(arr, Math.floor(((last-first)/2) + first), last);
+    const pivotVal = arr[last][1].audio_features[0].valence;
+    console.log("The pivot value is " + pivotVal.toString());
+    var i = first-1;
+
+    for(var j = first; j<last; j++){
+        if(arr[j][1].audio_features[0].valence <= pivotVal){
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    var pivotPos = i+1
+    swap(arr, last, pivotPos);
+    return pivotPos
+}
+
+
+function quickSortEnergy(arr, first, last){
+    if(first < last){
+        const pivot = partitionEnergy(arr, first, last);
+        quickSortEnergy(arr, first, pivot-1);
+        quickSortEnergy(arr, pivot+1,last);
+    }
+}
+
+function partitionEnergy(arr, first, last){
+    swap(arr, Math.floor(((last-first)/2) + first), last);
+    const pivotVal = arr[last][1].audio_features[0].energy;
+    console.log("The pivot value is " + pivotVal.toString());
+    var i = first-1;
+
+    for(var j = first; j<last; j++){
+        if(arr[j][1].audio_features[0].energy <= pivotVal){
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    var pivotPos = i+1
+    swap(arr, last, pivotPos);
+    return pivotPos
+}
+
+
 function swap(arr, i, j){
     const tempVal = arr[i];
     arr[i] = arr[j];
     arr[j] = tempVal;
+}
+
+async function getSongFeaturesWithID(id){
+    var apicall = "https://api.spotify.com/v1/audio-features?ids=" + id;
+    return await getResponse(apicall);
+}
+
+async function getTrackFeaturePairArr(tracks){
+    var trackFeaturePair = [];
+    
+    for(var i =0; i<tracks.items.length; i++){
+        trackFeaturePair.push([tracks.items[i], await getSongFeaturesWithID(tracks.items[i].id)]);
+    }
+
+    return trackFeaturePair;
+}
+
+
+
+async function populateMoodtracks(trackList){
+    var valenceSortedTracklist = await getTrackFeaturePairArr(trackList);
+    var energySortedTracklist = JSON.parse(JSON.stringify(valenceSortedTracklist));
+    quickSortValence(valenceSortedTracklist, 0, valenceSortedTracklist.length-1);
+    quickSortEnergy(energySortedTracklist, 0, energySortedTracklist.length-1);
+
+    console.log(valenceSortedTracklist);
+    console.log(energySortedTracklist);
+
+    const valenceListLength = valenceSortedTracklist.length;
+    const energyListLength = energySortedTracklist.length;
+
+
+    var topHappySongs = [valenceSortedTracklist[valenceListLength-1][0],valenceSortedTracklist[valenceListLength-2][0],valenceSortedTracklist[valenceListLength-3][0]];;
+    var topTenderSongs = [energySortedTracklist[0][0],energySortedTracklist[1][0],energySortedTracklist[2][0]];
+    var topEnergeticSongs = [energySortedTracklist[energyListLength-1][0],energySortedTracklist[energyListLength-2][0],energySortedTracklist[energyListLength-3][0]];;
+
+
+    var happyGrid = document.getElementById("moodtracks-happy-grid");
+    var tenderGrid = document.getElementById("moodtracks-tender-grid");
+    var energeticGrid = document.getElementById("moodtracks-energetic-grid");
+
+    var moodtracksSectors = [happyGrid,tenderGrid,energeticGrid];
+
+    for(var i =0; i< 3; i++){
+        for(var j = 0; j<3;j++){
+            var trackNameSpan = document.createElement("span");
+            var artistNameSpan = document.createElement("span");
+            trackNameSpan.setAttribute("id", "moodtracks-artist");
+            artistNameSpan.setAttribute("id", "moodtracks-artist");
+
+            var trackInfoDiv = document.createElement("div");
+            var albumImg = document.createElement("img");
+            albumImg.classList.add("moodtracks-album-img");
+
+            switch(i) {
+                case 0:
+                    var trackName = topHappySongs[j].name;
+                    var artistName = topHappySongs[j].artists[0].name;
+                    var albumURL = topHappySongs[j].album.images[0].url;
+                    break;
+                case 1:
+                    var trackName = topTenderSongs[j].name;
+                    var artistName = topTenderSongs[j].artists[0].name;
+                    var albumURL = topTenderSongs[j].album.images[0].url;
+                    break;
+                case 2:
+                    var trackName = topEnergeticSongs[j].name;
+                    var artistName = topEnergeticSongs[j].artists[0].name;
+                    var albumURL = topEnergeticSongs[j].album.images[0].url;
+                    break;
+            }
+
+            trackNameSpan.textContent = trackName;
+            artistNameSpan.textContent=artistName;
+            albumImg.setAttribute("src", albumURL);
+
+
+
+            trackInfoDiv.appendChild(trackNameSpan);
+            trackInfoDiv.appendChild(artistNameSpan);
+
+
+            if(i==1){
+                moodtracksSectors[i].appendChild(albumImg);
+                moodtracksSectors[i].appendChild(trackInfoDiv);
+            }
+            else{
+                moodtracksSectors[i].appendChild(trackInfoDiv);
+                moodtracksSectors[i].appendChild(albumImg);
+            }
+        }
+    }
+
+
+    //get and set artistName to a span with id moodtracks-artist
+    //get and set trackName to a span with id moodtracks-artist
+    //create a div called "trackInfo" append artistName and trackName
+    //create an img element wit class "moodtracks-album-img"
+    //create a new div called "trackRow" append trackInfo or img depending on i
+    
+
+    //append trackRow to respective div
+
 }
 
 
@@ -270,7 +420,7 @@ async function populateRareTracks(){
     track3.innerHTML = "";
 
     while(topThreeIndex < 3){
-        if(fullUserTrackList[libraryIndex].track.popularity > 0){
+        if(fullUserTrackList[libraryIndex].track.popularity >= 0){
             topThree.push(fullUserTrackList[libraryIndex]);
             topThreeIndex++;
         }
@@ -306,67 +456,4 @@ async function populateRareTracks(){
     img1.setAttribute("src", topThree[0].track.album.images[0].url);
     img2.setAttribute("src", topThree[1].track.album.images[1].url);
     img3.setAttribute("src", topThree[2].track.album.images[2].url);
-}
-
-async function populateMoodtracks(tracksToSort){
-    //traverse tracks to sort
-    //sort tracks based on their +valence
-    //sort tracks based on their -valence
-    //sort tracks based on their +energy
-
-
-    var happyGrid = document.getElementById("moodtracks-happy-grid");
-    var tenderGrid = document.getElementById("moodtracks-tender-grid");
-    var energeticGrid = document.getElementById("moodtracks-energetic-grid");
-
-    var moodtracksSectors = [happyGrid,tenderGrid,energeticGrid];
-
-    for(var i =0; i< 3; i++){
-        for(var j = 0; j<3;j++){
-            var trackNameSpan = document.createElement("span");
-            var artistNameSpan = document.createElement("span");
-            trackNameSpan.setAttribute("id", "moodtracks-artist");
-            artistNameSpan.setAttribute("id", "moodtracks-artist");
-
-            var trackInfoDiv = document.createElement("div");
-            var albumImg = document.createElement("img");
-            albumImg.classList.add("moodtracks-album-img");
-
-
-
-            var trackName = tracksToSort.items[j].name;
-            var artistName = tracksToSort.items[j].artists[0].name;
-            var albumURL = tracksToSort.items[j].album.images[0].url;
-
-            trackNameSpan.textContent = trackName;
-            artistNameSpan.textContent=artistName;
-            albumImg.setAttribute("src", albumURL);
-
-
-
-            trackInfoDiv.appendChild(trackNameSpan);
-            trackInfoDiv.appendChild(artistNameSpan);
-
-
-            if(i==1){
-                moodtracksSectors[i].appendChild(albumImg);
-                moodtracksSectors[i].appendChild(trackInfoDiv);
-            }
-            else{
-                moodtracksSectors[i].appendChild(trackInfoDiv);
-                moodtracksSectors[i].appendChild(albumImg);
-            }
-        }
-    }
-
-
-    //get and set artistName to a span with id moodtracks-artist
-    //get and set trackName to a span with id moodtracks-artist
-    //create a div called "trackInfo" append artistName and trackName
-    //create an img element wit class "moodtracks-album-img"
-    //create a new div called "trackRow" append trackInfo or img depending on i
-    
-
-    //append trackRow to respective div
-
 }
