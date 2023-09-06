@@ -48,7 +48,9 @@ if (!code && !localStorage.getItem('refresh_token')) {
     });
 }
 else if(!code && localStorage.getItem('refresh_token')){
-        // Prepare the data for the token refresh request
+        
+        const refreshToken = localStorage.getItem('refresh_token');
+
         const data = new URLSearchParams();
         data.append('grant_type', 'refresh_token');
         data.append('refresh_token', refreshToken);
