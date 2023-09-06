@@ -1,5 +1,5 @@
 const clientId = "0398c81e44224813ba198d3e48e98556";
-const redirectUri = "http://www.moodtracks.me/yourmoodtracks.html";
+const redirectUri = "https://www.moodtracks.me/yourmoodtracks.html";
 const apiScope = "user-read-private user-read-email user-top-read user-library-read";
 
 var trackScope = 'short_term';
