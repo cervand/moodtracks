@@ -1,4 +1,4 @@
-const clientId = "0398c81e44224813ba198d3e48e98556"; // Replace with your client ID
+const clientId = "0398c81e44224813ba198d3e48e98556";
 const redirectUri = "http://localhost:5500/yourmoodtracks.html";
 const apiScope = "user-read-private user-read-email user-top-read user-library-read";
 
@@ -27,7 +27,7 @@ var rareTracksRefreshButton = document.querySelector('#rare-tracks-refresh-butto
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
 
-if (!code) {
+if (!code && !localStorage.getItem('access_token')) {
     let codeVerifier = generateRandomString(128);
     generateCodeChallenge(codeVerifier).then(codeChallenge => {
         let state = generateRandomString(16);
@@ -58,7 +58,7 @@ else {
         code_verifier: codeVerifier
     });
 
-    const response = fetch('https://accounts.spotify.com/api/token', {
+    const response = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -80,34 +80,49 @@ else {
 
 
 
+    //populating variables that will be used throught this script. 
+    //gets users short/medium/long term top tracks and populates them on UI
     shortTermUserTracks = await getUserTopTracks('short_term', trackLimit);
     mediumTermUserTracks = await getUserTopTracks('medium_term', trackLimit);
     longTermUserTracks = await getUserTopTracks('long_term', trackLimit);
     populateTopTracks(shortTermUserTracks, "short");
     addTopTracksEventListeners()
 
+    //fetches song features from top tracks and creates copies of arrays to sort them based on attributes
     var valenceTFPShort = await getTrackFeaturePairArr(shortTermUserTracks);
     var energyTFPShort = JSON.parse(JSON.stringify(valenceTFPShort));
+    var danceTFPShort = JSON.parse(JSON.stringify(valenceTFPShort));
 
-    
     var valenceTFPMed = await getTrackFeaturePairArr(mediumTermUserTracks);
     var energyTFPMed = JSON.parse(JSON.stringify(valenceTFPMed));
+    var danceTFPMed = JSON.parse(JSON.stringify(valenceTFPMed));
 
     var valenceTFPLong = await getTrackFeaturePairArr(longTermUserTracks);
     var energyTFPLong = JSON.parse(JSON.stringify(valenceTFPLong));
+    var danceTFPLong = JSON.parse(JSON.stringify(valenceTFPLong));
     
+    //by default, the short term tracks are shown. we sort these so that they are populated in order. 
     quickSortValence(valenceTFPShort, 0, valenceTFPShort.length-1);
     quickSortEnergy(energyTFPShort, 0, energyTFPShort.length-1);
+    quickSortDance(danceTFPShort, 0, danceTFPShort.length-1);
 
-    populateMoodtracks(await valenceTFPShort, await energyTFPShort);
+    quickSortValence(valenceTFPMed, 0, valenceTFPMed.length-1);
+    quickSortEnergy(energyTFPMed, 0, energyTFPMed.length-1);
+    quickSortDance(danceTFPMed, 0, danceTFPMed.length-1);
+
+    quickSortValence(valenceTFPLong, 0, valenceTFPLong.length-1);
+    quickSortEnergy(energyTFPLong, 0, energyTFPLong.length-1);
+    quickSortDance(danceTFPLong, 0, danceTFPLong.length-1);
+
+    //updates UI to populate moodtracks card and adds event listeners to buttons on card.
+    populateMoodtracks(await valenceTFPShort, await energyTFPShort, await danceTFPShort);
     document.getElementById("moodtracks-loading-text").remove()
     addMoodtracksEventListeners();
     
-    //quickSort(await saveUserLibraryStartingFrom(0), 0, fullUserTrackList.length-1);
-    //await populateRareTracks();
-    //document.getElementById("#rare-tracks-loading-text").remove()
-    
-
+    quickSortLibrary(await saveUserLibraryStartingFrom(0, 2), 0, fullUserTrackList.length-1);
+    console.log(fullUserTrackList);
+    await populateRareTracks();
+    document.getElementById("rare-tracks-loading-text").remove();
 }
 
 // Event listeners for option buttons in top tracks card. Handle updating the top tracks card. 
@@ -135,21 +150,21 @@ function addTopTracksEventListeners(){
 function addMoodtracksEventListeners(){
     
     shortTermButtonMT.addEventListener('click', function () {
-        populateMoodtracks(valenceTFPShort, energyTFPShort);
+        populateMoodtracks(valenceTFPShort, energyTFPShort, danceTFPShort);
         removeButtonHighlightFrom(mtOptionsButtons,"moodtracks");
         shortTermButtonMT.classList.add("selected-moodtracks-option");
     });
 
     
     medTermButtonMT.addEventListener('click', function () {
-        populateMoodtracks(valenceTFPMed, energyTFPMed);
+        populateMoodtracks(valenceTFPMed, energyTFPMed, danceTFPMed);
         removeButtonHighlightFrom(mtOptionsButtons,"moodtracks");
         medTermButtonMT.classList.add("selected-moodtracks-option");
     });
 
     
     longTermButtonMT.addEventListener('click', function () {
-        populateMoodtracks(valenceTFPLong, energyTFPLong);
+        populateMoodtracks(valenceTFPLong, energyTFPLong, danceTFPLong);
         removeButtonHighlightFrom(mtOptionsButtons,"moodtracks");
         longTermButtonMT.classList.add("selected-moodtracks-option");
     });
@@ -201,6 +216,7 @@ async function generateCodeChallenge(codeVerifier) {
 async function getUserTopTracks(timePeriod, trackListLength) {
     var apiCall = 'https://api.spotify.com/v1/me/top/tracks?time_range=' + timePeriod + '&limit=' + trackListLength;
     let accessToken = localStorage.getItem('access_token');
+    console.log(apiCall);
 
     const response = await fetch(apiCall, {
         headers: {
@@ -213,9 +229,9 @@ async function getUserTopTracks(timePeriod, trackListLength) {
     return await response.json();
 }
 
-
 async function getResponse(apiCall){
     let accessToken = localStorage.getItem('access_token');
+    console.log(apiCall);
 
     const response = await fetch(apiCall, {
         headers: {
@@ -226,32 +242,35 @@ async function getResponse(apiCall){
     return await response.json();
 }
 
-async function saveUserLibraryStartingFrom(offset){
+async function saveUserLibraryStartingFrom(offset, limit, recursiveCalls=0){
     var userLibrarySegment = await getResponse('https://api.spotify.com/v1/me/tracks?limit=50&offset='+offset);
+    recursiveCalls++;
+    console.log("The recursive call is" + recursiveCalls);
 
     for(var i = 0; i < userLibrarySegment.items.length; i++){
         fullUserTrackList.push(userLibrarySegment.items[i]);
     }
-    console.log(userLibrarySegment.next);
-    console.log(fullUserTrackList);
 
-    if(userLibrarySegment.next != null){
-        return await saveUserLibraryStartingFrom(offset+50);
+    if(recursiveCalls == limit){
+        return fullUserTrackList;
+    }
+    else if(userLibrarySegment.next != null){
+        return await saveUserLibraryStartingFrom(offset+50, limit, recursiveCalls);
     }
     else{
         return fullUserTrackList;
     }
 }
 
-function quickSort(arr, first, last){
+function quickSortLibrary(arr, first, last){
     if(first < last){
-        const pivot = partition(arr, first, last);
-        quickSort(arr, first, pivot-1);
-        quickSort(arr, pivot+1,last);
+        const pivot = partitionLibrary(arr, first, last);
+        quickSortLibrary(arr, first, pivot-1);
+        quickSortLibrary(arr, pivot+1,last);
     }
 }
 
-function partition(arr, first, last){
+function partitionLibrary(arr, first, last){
     swap(arr, Math.floor(((last-first)/2) + first), last);
     const pivotVal = arr[last].track.popularity;
     var i = first-1;
@@ -276,11 +295,8 @@ function quickSortValence(arr, first, last){
 }
 
 function partitionValence(arr, first, last){
-    //console.log("this is the last element");
-    //console.log(arr[last]);
     swap(arr, Math.floor(((last-first)/2) + first), last);
     const pivotVal = arr[last][1].valence;
-    //console.log("The pivot value is " + pivotVal.toString());
     var i = first-1;
 
     for(var j = first; j<last; j++){
@@ -294,7 +310,6 @@ function partitionValence(arr, first, last){
     return pivotPos
 }
 
-
 function quickSortEnergy(arr, first, last){
     if(first < last){
         const pivot = partitionEnergy(arr, first, last);
@@ -306,7 +321,6 @@ function quickSortEnergy(arr, first, last){
 function partitionEnergy(arr, first, last){
     swap(arr, Math.floor(((last-first)/2) + first), last);
     const pivotVal = arr[last][1].energy;
-    //console.log("The pivot value is " + pivotVal.toString());
     var i = first-1;
 
     for(var j = first; j<last; j++){
@@ -320,6 +334,30 @@ function partitionEnergy(arr, first, last){
     return pivotPos
 }
 
+function quickSortDance(arr, first, last){
+    if(first < last){
+        const pivot = partitionDance(arr, first, last);
+        quickSortDance(arr, first, pivot-1);
+        quickSortDance(arr, pivot+1,last);
+    }
+}
+
+function partitionDance(arr, first, last){
+    swap(arr, Math.floor(((last-first)/2) + first), last);
+    const pivotVal = arr[last][1].danceability;
+    var i = first-1;
+
+    for(var j = first; j<last; j++){
+        if(arr[j][1].danceability <= pivotVal){
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    var pivotPos = i+1
+    swap(arr, last, pivotPos);
+    return pivotPos
+} 
+
 
 function swap(arr, i, j){
     const tempVal = arr[i];
@@ -330,50 +368,79 @@ function swap(arr, i, j){
 async function getSongFeaturesWithID(id){
     
     var apicall = "https://api.spotify.com/v1/audio-features?ids=" + id;
-    console.log(apicall);
     return await getResponse(apicall);
 }
 
 async function getTrackFeaturePairArr(tracks){
     var trackFeaturePair = [];
     var idList = "";
-
-    console.log(tracks.items.length);
     
-
     for(var j = 0; j<50; j++){
-        console.log(j);
         idList = idList + tracks.items[j].id + ",";   
     }
 
-    console.log(idList);
     idList = idList.substring(0,idList.length-1);
-    console.log(idList);
-
 
     var response = await getSongFeaturesWithID(idList);
-    console.log(response);
 
     for(var i =0; i<response.audio_features.length; i++){
+        //console.log(tracks.items[i].name);
+        //console.log(response.audio_features[i].uri);
+        
         trackFeaturePair.push([tracks.items[i], response.audio_features[i]]);
     }
 
-    console.log(trackFeaturePair);
     return trackFeaturePair;
 }
 
-async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePair){
-    console.log("populating moodtracks");
-    console.log(valenceTrackFeaturePair);
-    console.log(energyTrackFeaturePair);
+
+/* valenceTrackfeaturePair and energyTrackFeaturePair must be sorted already.
+ *
+ */
+async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePair, danceTrackFeaturePair){
+    //console.log("Valence sorted tracks:");
+    //console.log(valenceTrackFeaturePair);
+
+    //console.log("Energy sorted tracks:");
+    //console.log(energyTrackFeaturePair);
+
+    //console.log("danceability sorted tracks");
+    //console.log(danceTrackFeaturePair);
 
     const valenceListLength = valenceTrackFeaturePair.length;
     const energyListLength = energyTrackFeaturePair.length;
 
+    /*
+    var filteredValenceUp = getFilteredTrackFeaturePair(valenceTrackFeaturePair, 0.5, 0.5,1);
+    var filteredValencedDown = getFilteredTrackFeaturePair(valenceTrackFeaturePair, 0.5, 0.5,0);
+    var filteredEnergyUp = getFilteredTrackFeaturePair(energyTrackFeaturePair, 0.5, 0.5,1);
+    var filteredEnergyDown = getFilteredTrackFeaturePair(energyTrackFeaturePair, 0.5, 0.5,0);
 
-    var topHappySongs = [valenceTrackFeaturePair[valenceListLength-1][0],valenceTrackFeaturePair[valenceListLength-2][0],valenceTrackFeaturePair[valenceListLength-3][0]];;
-    var topTenderSongs = [energyTrackFeaturePair[0][0],energyTrackFeaturePair[1][0],energyTrackFeaturePair[2][0]];
-    var topEnergeticSongs = [energyTrackFeaturePair[energyListLength-1][0],energyTrackFeaturePair[energyListLength-2][0],energyTrackFeaturePair[energyListLength-3][0]];;
+    var topHappySongs = [   filteredValenceUp[filteredValenceUp.length-1][0],
+                            filteredValenceUp[filteredValenceUp.length-2][0],
+                            filteredValenceUp[filteredValenceUp.length-3][0] ];
+                    
+    var topTenderSongs = [  filteredEnergyDown[0][0],
+                            filteredEnergyDown[1][0],
+                            filteredEnergyDown[2][0] ];
+
+    var topEnergeticSongs = [  filteredEnergyUp[filteredEnergyUp.length-1][0],
+                            filteredEnergyUp[filteredEnergyUp.length-2][0],
+                            filteredEnergyUp[filteredEnergyUp.length-3][0] ];
+
+
+    */
+    
+    var topHappySongs = [   valenceTrackFeaturePair[valenceListLength-1][0],
+                            valenceTrackFeaturePair[valenceListLength-2][0],
+                            valenceTrackFeaturePair[valenceListLength-3][0] ];
+    var topTenderSongs = [  energyTrackFeaturePair[0][0],
+                            energyTrackFeaturePair[1][0],
+                            energyTrackFeaturePair[2][0]];
+    var topEnergeticSongs = [   energyTrackFeaturePair[energyListLength-1][0],
+                                energyTrackFeaturePair[energyListLength-2][0],
+                                energyTrackFeaturePair[energyListLength-3][0]];;
+    
 
 
     var happyGrid = document.getElementById("moodtracks-happy-grid");
@@ -381,12 +448,6 @@ async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePai
     var energeticGrid = document.getElementById("moodtracks-energetic-grid");
 
     var moodtracksSectors = [happyGrid,tenderGrid,energeticGrid];
-
-    console.log(moodtracksSectors);
-    console.log(topHappySongs);
-
-    
-
 
     for(var i =0; i< 3; i++){
         moodtracksSectors[i].innerHTML = "";
@@ -496,9 +557,9 @@ async function populateRareTracks(){
         }
     }
 
-    img1.setAttribute("src", topThree[0].track.album.images[0].url);
+    img1.setAttribute("src", topThree[0].track.album.images[1].url);
     img2.setAttribute("src", topThree[1].track.album.images[1].url);
-    img3.setAttribute("src", topThree[2].track.album.images[2].url);
+    img3.setAttribute("src", topThree[2].track.album.images[1].url);
 }
 
 async function populateTopTracks(userTopTrackData, timePeriod) {
@@ -541,15 +602,11 @@ async function populateTopTracks(userTopTrackData, timePeriod) {
     }
 }
 function adjustFontSizingMoodtracks(threshold, newFontSize){
-    console.log(newFontSize)
     var isDone = 1;
     var elmnt = document.getElementsByClassName("moodtracks-track-info");
     newFontSize = newFontSize - 2;
 
     for(var i = 0; i < elmnt.length; i++){
-        console.log(elmnt[i].textContent);
-        console.log(elmnt[i].offsetHeight);
-        console.log(threshold);
         if(elmnt[i].offsetHeight > threshold){
             var spans = elmnt[i].getElementsByTagName("span");
             for (var j = 0; j < spans.length; j++) {
@@ -562,4 +619,25 @@ function adjustFontSizingMoodtracks(threshold, newFontSize){
     if(!isDone){
         adjustFontSizingMoodtracks(threshold, newFontSize);
     }
+}
+
+function getFilteredTrackFeaturePair(tfp, minValence, minEnergy, moreThanLimit){
+    var filteredList = [];
+
+    if(moreThanLimit){
+        for(var i =0; i < tfp.length; i++){
+            if(tfp[i][1].valence >= minValence && tfp[i][1].energy >= minEnergy){
+                filteredList.push(tfp[i]);
+            }
+        }
+    }
+    else{
+        for(var i =0; i < tfp.length; i++){
+            if(tfp[i][1].valence < minValence && tfp[i][1].energy < minEnergy){
+                filteredList.push(tfp[i]);
+            }
+        }
+    }
+
+    return filteredList;
 }
