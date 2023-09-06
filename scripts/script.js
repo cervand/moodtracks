@@ -27,7 +27,7 @@ var rareTracksRefreshButton = document.querySelector('#rare-tracks-refresh-butto
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
 
-if (!code && !localStorage.getItem('access_token')) {
+if (!code && !localStorage.getItem('refresh_token')) {
     let codeVerifier = generateRandomString(128);
     generateCodeChallenge(codeVerifier).then(codeChallenge => {
         let state = generateRandomString(16);
@@ -47,6 +47,29 @@ if (!code && !localStorage.getItem('access_token')) {
         window.location = 'https://accounts.spotify.com/authorize?' + args;
     });
 }
+else if(!code && localStorage.getItem('refresh_token')){
+        // Prepare the data for the token refresh request
+        const data = new URLSearchParams();
+        data.append('grant_type', 'refresh_token');
+        data.append('refresh_token', refreshToken);
+        data.append('client_id', clientId);
+      
+        // Make a POST request to the token endpoint
+        fetch('https://accounts.spotify.com/api/token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: data,
+        })
+          .then(response => response.json())
+          .then(data => {
+            localStorage.setItem('access_token', data.access_token);
+          })
+          .catch(error => {
+            console.error('Error refreshing token:', error);
+          });
+      }
 else {
     let codeVerifier = localStorage.getItem('code_verifier');
 
@@ -73,6 +96,7 @@ else {
         })
         .then(data => {
             localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('refresh_token', data.refresh_token);
         })
         .catch(error => {
             console.error('Error:', error);
