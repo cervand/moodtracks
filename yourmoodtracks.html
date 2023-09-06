@@ -10,11 +10,10 @@
     <title>moodtracks.me</title>
     <meta name="author" content="Andres Cervantes" />
     <meta name="description"
-        content="What pumps you up? What do you listen to when you are happy? Find out and share with your friends on moodtracks.me" 
-    />
+        content="What pumps you up? What do you listen to when you are happy? Find out and share with your friends on moodtracks.me" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="resources/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="resources/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="resources/favicons/favicon-16x16.png">
@@ -23,15 +22,16 @@
     <link rel="stylesheet" href="styles/moodtracks_cards.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,800;0,900;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,800;0,900;1,700&display=swap"
+        rel="stylesheet">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5166672221995111"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     <nav class="navbar">
-        <div class = "logo">
+        <div class="logo">
             <a href="/index.html" onclick="setPressedButton(this)">moodtracks.me</a>
         </div>
 
@@ -42,27 +42,28 @@
         </a>
 
         <ul class="navbuttons">
-            <li><a class = "current_tab" href = "/index.html" onclick="setPressedButton(this)">home</a></li>
-            <li><a href = "/about.html" onclick="setPressedButton(this)">about</a></li>
-            <li><a href = "/contact.html" onclick="setPressedButton(this)">contact</a></li>
+            <li><a class="current_tab" href="/index.html" onclick="setPressedButton(this)">home</a></li>
+            <li><a href="/about.html" onclick="setPressedButton(this)">about</a></li>
+            <li><a href="/contact.html" onclick="setPressedButton(this)">contact</a></li>
         </ul>
     </nav>
 
     <div class="content">
-        <div class = "track-info-card top-tracks-card">
+        <div class="track-info-card top-tracks-card">
             <span class="card-title">Top tracks.</span>
             <span class="card-description">
                 Here are your top tracks! You can change it to include songs from the past month,
                 six months, or of all time.
             </span>
             <div class="downloadable-story">
-                <img src="/resources/img/top-tracks-background-V2.png" alt="Background for story for top tracks" class="story-background">
+                <img src="/resources/img/top-tracks-background-V2.png" alt="Background for story for top tracks"
+                    class="story-background">
                 <div class="story-text-overlay">
                     <h1 id="top-tracks-story-title">My top tracks of the month</span></h1>
-                    <div id="top-tracks-story-track-list"></div> 
+                    <div id="top-tracks-story-track-list"></div>
                 </div>
             </div>
-            <div class = "card-options">
+            <div class="card-options">
                 <span id="card-options-title">time period</span>
                 <div class="card-options-buttons">
                     <button class="selected-top-tracks-option" id="top-tracks-past-month-button">Month</button>
@@ -70,21 +71,19 @@
                     <button id="top-tracks-all-time-button">All Time</button>
                 </div>
             </div>
+
+            <script async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5166672221995111"
+                crossorigin="anonymous"></script>
+            <!-- moodtracks seperator -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5166672221995111"
+                data-ad-slot="7593239007" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+
             <button class="download-image-button">Download Image</button>
         </div>
-
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5166672221995111"
-     crossorigin="anonymous"></script>
-<!-- moodtracks seperator -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5166672221995111"
-     data-ad-slot="7593239007"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
         <div class="track-info-card rare-tracks-card">
             <span class="card-title">Rare tracks.</span>
@@ -93,9 +92,11 @@
                 These are the tracks in your library that have been played the least among all Spotify users.
             </span>
             <div class="downloadable-story">
-                <img src="/resources/img/raretracks-blanktemplate.png" alt="Background for story for top tracks" class="story-background">
+                <img src="/resources/img/raretracks-blanktemplate.png" alt="Background for story for top tracks"
+                    class="story-background">
                 <div class="story-text-overlay">
-                    <span id = "rare-tracks-loading-text" style="color: white; position: absolute; left: 95px; top: 400px; background-color: rgb(53, 53, 53); padding: 25px; border-radius: 20px;"> 
+                    <span id="rare-tracks-loading-text"
+                        style="color: white; position: absolute; left: 95px; top: 400px; background-color: rgb(53, 53, 53); padding: 25px; border-radius: 20px;">
                         Loading
                     </span>
                     <div id="rare-tracks-story-grid">
@@ -106,50 +107,51 @@
                         <img class="album-img3" src="">
                         <span class="rare-track3"></span>
 
-                    </div> 
+                    </div>
                 </div>
             </div>
-            <div class = "card-options">
+            <div class="card-options">
                 <span id="card-options-title"></span>
                 <div class="card-options-buttons">
                     <button class="selected-rare-tracks-option" id="rare-tracks-refresh-button">Get New List</button>
                 </div>
             </div>
+
+            <script async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5166672221995111"
+                crossorigin="anonymous"></script>
+            <!-- moodtracks seperator -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5166672221995111"
+                data-ad-slot="7593239007" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+
             <button class="download-image-button">Download Image</button>
         </div>
-
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5166672221995111"
-     crossorigin="anonymous"></script>
-<!-- moodtracks seperator -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5166672221995111"
-     data-ad-slot="7593239007"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
         <div class="track-info-card moodtracks-card">
             <span class="card-title">moodtracks.</span>
             <span class="card-description">
-                Have you wondered how your top songs are sorted, moodwise? These are your top three for each mood! (More moods coming soon!)
+                Have you wondered how your top songs are sorted, moodwise? These are your top three for each mood! (More
+                moods coming soon!)
             </span>
             <div class="downloadable-story">
-                <img src="/resources/img/moodtracks-blankTemplate.png" alt="Background for story for top tracks" class="story-background">
+                <img src="/resources/img/moodtracks-blankTemplate.png" alt="Background for story for top tracks"
+                    class="story-background">
                 <div class="story-text-overlay">
-                    <span id = moodtracks-loading-text style="color: white; position: absolute; left: 100px; top: 400px; background-color: rgb(53, 53, 53); padding: 25px; border-radius: 20px;"> 
+                    <span id=moodtracks-loading-text
+                        style="color: white; position: absolute; left: 100px; top: 400px; background-color: rgb(53, 53, 53); padding: 25px; border-radius: 20px;">
                         Loading
                     </span>
                     <div id="moodtracks-story-grid">
                         <div id="moodtracks-happy-grid"></div>
                         <div id="moodtracks-tender-grid"></div>
                         <div id="moodtracks-energetic-grid"></div>
-                    </div> 
+                    </div>
                 </div>
             </div>
-            <div class = "card-options">
+            <div class="card-options">
                 <span id="card-options-title"></span>
                 <div class="card-options-buttons moodtracks-options">
                     <button class="selected-moodtracks-option" id="moodtracks-past-month-button">Month</button>
@@ -157,22 +159,19 @@
                     <button id="moodtracks-all-time-button">All Time</button>
                 </div>
             </div>
+
+            <script async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5166672221995111"
+                crossorigin="anonymous"></script>
+            <!-- moodtracks seperator -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5166672221995111"
+                data-ad-slot="7593239007" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+
             <button class="download-image-button">Download Image</button>
         </div>
-
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5166672221995111"
-     crossorigin="anonymous"></script>
-<!-- moodtracks seperator -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5166672221995111"
-     data-ad-slot="7593239007"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
     </div>
 
     <script src="scripts/pagemanager.js"> </script>
