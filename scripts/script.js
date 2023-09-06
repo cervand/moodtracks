@@ -27,7 +27,7 @@ var rareTracksRefreshButton = document.querySelector('#rare-tracks-refresh-butto
 const urlParams = new URLSearchParams(window.location.search);
 let code = urlParams.get('code');
 
-if (!code && !localStorage.getItem('access_token')) {
+if (!code) {
     let codeVerifier = generateRandomString(128);
     generateCodeChallenge(codeVerifier).then(codeChallenge => {
         let state = generateRandomString(16);
