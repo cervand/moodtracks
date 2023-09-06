@@ -264,3 +264,9 @@
     background-color: orangered;
     color: white;
 }
+
+@media screen and (max-width: 310px) {
+    .content{
+        flex-direction: column;
+    }
+}
