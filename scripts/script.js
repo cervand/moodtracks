@@ -478,8 +478,9 @@ async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePai
             trackNameSpan.setAttribute("id", "moodtracks-track");
             artistNameSpan.setAttribute("id", "moodtracks-artist");
 
+
             var trackInfoDiv = document.createElement("div");
-            trackInfoDiv.classList.add("moodtracks-track-info")
+            trackInfoDiv.classList.add("moodtracks-track-info");
             var albumImg = document.createElement("img");
             albumImg.classList.add("moodtracks-album-img");
 
@@ -488,16 +489,19 @@ async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePai
                     var trackName = topHappySongs[j].name;
                     var artistName = topHappySongs[j].artists[0].name;
                     var albumURL = topHappySongs[j].album.images[0].url;
+                    trackInfoDiv.setAttribute("href", topHappySongs[j].external_urls.spotify );
                     break;
                 case 1:
                     var trackName = topTenderSongs[j].name;
                     var artistName = topTenderSongs[j].artists[0].name;
                     var albumURL = topTenderSongs[j].album.images[0].url;
+                    trackInfoDiv.setAttribute("href", );
                     break;
                 case 2:
                     var trackName = topEnergeticSongs[j].name;
                     var artistName = topEnergeticSongs[j].artists[0].name;
                     var albumURL = topEnergeticSongs[j].album.images[0].url;
+                    trackInfoDiv.setAttribute("href", );
                     break;
             }
 
