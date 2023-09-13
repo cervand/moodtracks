@@ -1,6 +1,12 @@
-const client_id = process.env.CLIENT_ID;
-const apiScope = process.env.API_SCOPE;
-const redirectUri = process.env.REDIRECT_URI;
+fetch('/.netlify/functions/apitoken')
+  .then((response) => response.json())
+  .then((data) => {
+    const { CLIENT_ID: clientId, API_SCOPE: apiScope, REDIRECT_URI: redirectUri } = data;
+  })
+  .catch((error) => {
+    // Handle errors.
+    console.error(error);
+  });
 
 
 const trackLimit = '50';
