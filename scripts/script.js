@@ -477,25 +477,31 @@ async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePai
                     break;
             }
 
+            //adding content for track name, track artist, and album artwork. 
             trackNameSpan.textContent = trackName;
             artistNameSpan.textContent = artistName;
             albumImg.setAttribute("src", albumURL);
-            albumImg.setAttribute("src", externalURL);
 
+            //Adding hyperlinks to Spotify metadata
+            var albumImgAnchor = document.createElement("a");
+            albumImgAnchor.setAttribute("href", externalURL);
+            albumImgAnchor.appendChild(albumImg)
+            trackInfoDiv.setAttribute("href", externalURL);
+
+            //appending name and artist to trackInfo
             trackInfoDiv.appendChild(trackNameSpan);
             trackInfoDiv.appendChild(artistNameSpan);
-            trackInfoDiv.setAttribute("href", externalURL);
 
 
             if(i==1){
-                moodtracksSectors[i].appendChild(albumImg);
+                moodtracksSectors[i].appendChild(albumImgAnchor);
                 moodtracksSectors[i].appendChild(trackInfoDiv);
 
                 
             }
             else{
                 moodtracksSectors[i].appendChild(trackInfoDiv);
-                moodtracksSectors[i].appendChild(albumImg);
+                moodtracksSectors[i].appendChild(albumImgAnchor);
             }
         }
     }
