@@ -1,3 +1,8 @@
+const client_id = process.env.CLIENT_ID;
+const apiScope = process.env.API_SCOPE;
+const redirectUri = process.env.REDIRECT_URI;
+
+
 const trackLimit = '50';
 const displayedTrackListLimit = 10;
 
