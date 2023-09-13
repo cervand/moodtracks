@@ -1,17 +1,18 @@
 let clientId, apiScope, redirectUri;
 
-fetch('/.netlify/functions/apitoken')
+await fetch('/.netlify/functions/apitoken')
   .then((response) => response.json())
   .then((data) => {
     clientId = data.CLIENT_ID;
     apiScope = data.API_SCOPE;
     redirectUri = data.REDIRECT_URI;
+    console.log(clientId);
   })
   .catch((error) => {
     // Handle errors.
     console.error(error);
   });
-  
+
 const trackLimit = '50';
 const displayedTrackListLimit = 10;
 
