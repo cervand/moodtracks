@@ -169,6 +169,7 @@
 #rare-tracks-story-grid img{
     width: 133.3px;
     height: 133.3px;
+    display: block;
 }
 
 .rare-track1, .rare-track2, .rare-track3 {
@@ -268,6 +269,7 @@
 
 a {
     text-decoration: none;
+    color:#ffffff
   }
   
 

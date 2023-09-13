@@ -1,6 +1,8 @@
-let clientId, apiScope, redirectUri;
+let clientId ="0398c81e44224813ba198d3e48e98556", 
+    apiScope = "user-read-private user-read-email user-top-read user-library-read", 
+    redirectUri = "http://localhost:5500/yourmoodtracks.html";
 
-await fetch('/.netlify/functions/apitoken')
+/*await fetch('/.netlify/functions/apitoken')
   .then((response) => response.json())
   .then((data) => {
     clientId = data.CLIENT_ID;
@@ -11,7 +13,8 @@ await fetch('/.netlify/functions/apitoken')
   .catch((error) => {
     // Handle errors.
     console.error(error);
-  });
+});
+*/
 
 const trackLimit = '50';
 const displayedTrackListLimit = 10;
@@ -535,6 +538,7 @@ async function populateRareTracks(){
     }
 
 
+    //Gets track artist and title, adds it to existing track1/2/3 divs. 
     for(var i = 0; i < topThree.length;i++){
         var trackName = document.createElement("span");
         var artistName = document.createElement("span");
@@ -548,21 +552,25 @@ async function populateRareTracks(){
         var externalURL = topThree[i].track.external_urls.spotify;
 
         if(i == 0){
-            document.getElementById("rare-track-1-a").setAttribute("href", externalURL);
             track1.appendChild(trackName);
             track1.appendChild(artistName);
+            track1.setAttribute("href", externalURL);
         }
         if(i == 1){
-            document.getElementById("rare-track-2-a").setAttribute("href", externalURL);
             track2.appendChild(trackName);
             track2.appendChild(artistName);
+            track2.setAttribute("href", externalURL);
         }
         if(i == 2){
-            document.getElementById("rare-track-3-a").setAttribute("href", externalURL);
             track3.appendChild(trackName);
             track3.appendChild(artistName);
+            track3.setAttribute("href", externalURL);
         }
     }
+
+    document.getElementById("rare-track-img1-a").setAttribute("href", topThree[0].track.external_urls.spotify);
+    document.getElementById("rare-track-img2-a").setAttribute("href", topThree[1].track.external_urls.spotify);
+    document.getElementById("rare-track-img3-a").setAttribute("href", topThree[2].track.external_urls.spotify);
 
     img1.setAttribute("src", topThree[0].track.album.images[1].url);
     img2.setAttribute("src", topThree[1].track.album.images[1].url);
@@ -590,7 +598,7 @@ async function populateTopTracks(userTopTrackData, timePeriod) {
     for (var i = 0; i < displayedTrackListLimit; i++) {
         var trackName = document.createElement("span");
         var artistName = document.createElement("span");
-        var individualTrackData = document.createElement("div");
+        var individualTrackData = document.createElement("a");
         var rankNumber = document.createElement("span");
 
         individualTrackData.setAttribute("id", "individualTrackData");
@@ -606,6 +614,7 @@ async function populateTopTracks(userTopTrackData, timePeriod) {
 
         trackList.appendChild(rankNumber);
         trackList.appendChild(individualTrackData);
+        individualTrackData.setAttribute("href", userTopTrackData.items[i].external_urls.spotify);
     }
 }
 function adjustFontSizingMoodtracks(threshold, newFontSize){
