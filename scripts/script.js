@@ -545,7 +545,7 @@ async function populateRareTracks(){
 
         trackName.textContent = topThree[i].track.name;
         artistName.textContent = topThree[i].track.artists[0].name;
-        externalURL = topThree[i].track.external_urls.spotify;
+        var externalURL = topThree[i].track.external_urls.spotify;
 
         if(i == 0){
             document.getElementById("rare-track-1-a").setAttribute("href", externalURL);
