@@ -1,11 +1,5 @@
-const clientId = "0398c81e44224813ba198d3e48e98556";
-const redirectUri = "http://www.moodtracks.me/yourmoodtracks.html";
-const apiScope = "user-read-private user-read-email user-top-read user-library-read";
-
-var trackScope = 'short_term';
 const trackLimit = '50';
 const displayedTrackListLimit = 10;
-
 
 var shortTermUserTracks;
 var mediumTermUserTracks;
@@ -51,7 +45,7 @@ else {
     let codeVerifier = localStorage.getItem('code_verifier');
     var body;
 
-    if(localStorage.getItem("refresh_token")){
+    if(localStorage.getItem("refresh_token") != null){
         console.log("refreshed token");
         body = new URLSearchParams({
             grant_type: 'refresh_token',
