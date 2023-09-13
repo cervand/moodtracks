@@ -461,31 +461,30 @@ async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePai
                     var trackName = topHappySongs[j].name;
                     var artistName = topHappySongs[j].artists[0].name;
                     var albumURL = topHappySongs[j].album.images[0].url;
-                    trackInfoDiv.setAttribute("href", topHappySongs[j].external_urls.spotify );
-                    console.log(topHappySongs[j].external_urls.spotify );
+                    var externalURL = topHappySongs[j].external_urls.spotify;
                     break;
                 case 1:
                     var trackName = topTenderSongs[j].name;
                     var artistName = topTenderSongs[j].artists[0].name;
                     var albumURL = topTenderSongs[j].album.images[0].url;
-                    trackInfoDiv.setAttribute("href",topTenderSongs[j].external_urls.spotify);
+                    var externalURL = topTenderSongs[j].external_urls.spotify;
                     break;
                 case 2:
                     var trackName = topEnergeticSongs[j].name;
                     var artistName = topEnergeticSongs[j].artists[0].name;
                     var albumURL = topEnergeticSongs[j].album.images[0].url;
-                    trackInfoDiv.setAttribute("href", topEnergeticSongs[j].external_urls.spotify);
+                    var externalURL = topEnergeticSongs[j].external_urls.spotify;
                     break;
             }
 
             trackNameSpan.textContent = trackName;
-            artistNameSpan.textContent=artistName;
+            artistNameSpan.textContent = artistName;
             albumImg.setAttribute("src", albumURL);
+            albumImg.setAttribute("src", externalURL);
 
-
-            
             trackInfoDiv.appendChild(trackNameSpan);
             trackInfoDiv.appendChild(artistNameSpan);
+            trackInfoDiv.setAttribute("href", externalURL);
 
 
             if(i==1){
