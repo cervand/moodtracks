@@ -527,7 +527,7 @@ async function populateRareTracks(){
     track3.innerHTML = "";
 
     while(topThreeIndex < 3){
-        if(fullUserTrackList[libraryIndex].track.popularity >= 0){
+        if(fullUserTrackList[libraryIndex].track.popularity >= 1){
             topThree.push(fullUserTrackList[libraryIndex]);
             topThreeIndex++;
         }
@@ -545,16 +545,20 @@ async function populateRareTracks(){
 
         trackName.textContent = topThree[i].track.name;
         artistName.textContent = topThree[i].track.artists[0].name;
+        externalURL = topThree[i].track.external_urls.spotify;
 
         if(i == 0){
+            document.getElementById("rare-track-1-a").setAttribute("href", externalURL);
             track1.appendChild(trackName);
             track1.appendChild(artistName);
         }
         if(i == 1){
+            document.getElementById("rare-track-2-a").setAttribute("href", externalURL);
             track2.appendChild(trackName);
             track2.appendChild(artistName);
         }
         if(i == 2){
+            document.getElementById("rare-track-3-a").setAttribute("href", externalURL);
             track3.appendChild(trackName);
             track3.appendChild(artistName);
         }
