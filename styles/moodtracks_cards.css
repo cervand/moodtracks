@@ -241,6 +241,7 @@
 .moodtracks-album-img {
     width: 45.85px;
     height: 45.85px;
+    display: block;
 }
 
 
@@ -264,6 +265,11 @@
     background-color: orangered;
     color: white;
 }
+
+a {
+    text-decoration: none;
+  }
+  
 
 @media screen and (max-width: 1125px) {
     .content{
