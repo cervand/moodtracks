@@ -416,48 +416,20 @@ async function getTrackFeaturePairArr(tracks){
 
 
 /* valenceTrackfeaturePair and energyTrackFeaturePair must be sorted already.
- *
+ * Populates moodtracks
  */
 async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePair, danceTrackFeaturePair){
-    //console.log("Valence sorted tracks:");
-    //console.log(valenceTrackFeaturePair);
-
-    //console.log("Energy sorted tracks:");
-    //console.log(energyTrackFeaturePair);
-
-    //console.log("danceability sorted tracks");
-    //console.log(danceTrackFeaturePair);
-
     const valenceListLength = valenceTrackFeaturePair.length;
     const energyListLength = energyTrackFeaturePair.length;
-
-    /*
-    var filteredValenceUp = getFilteredTrackFeaturePair(valenceTrackFeaturePair, 0.5, 0.5,1);
-    var filteredValencedDown = getFilteredTrackFeaturePair(valenceTrackFeaturePair, 0.5, 0.5,0);
-    var filteredEnergyUp = getFilteredTrackFeaturePair(energyTrackFeaturePair, 0.5, 0.5,1);
-    var filteredEnergyDown = getFilteredTrackFeaturePair(energyTrackFeaturePair, 0.5, 0.5,0);
-
-    var topHappySongs = [   filteredValenceUp[filteredValenceUp.length-1][0],
-                            filteredValenceUp[filteredValenceUp.length-2][0],
-                            filteredValenceUp[filteredValenceUp.length-3][0] ];
-                    
-    var topTenderSongs = [  filteredEnergyDown[0][0],
-                            filteredEnergyDown[1][0],
-                            filteredEnergyDown[2][0] ];
-
-    var topEnergeticSongs = [  filteredEnergyUp[filteredEnergyUp.length-1][0],
-                            filteredEnergyUp[filteredEnergyUp.length-2][0],
-                            filteredEnergyUp[filteredEnergyUp.length-3][0] ];
-
-
-    */
     
     var topHappySongs = [   valenceTrackFeaturePair[valenceListLength-1][0],
                             valenceTrackFeaturePair[valenceListLength-2][0],
                             valenceTrackFeaturePair[valenceListLength-3][0] ];
+
     var topTenderSongs = [  energyTrackFeaturePair[0][0],
                             energyTrackFeaturePair[1][0],
                             energyTrackFeaturePair[2][0]];
+
     var topEnergeticSongs = [   energyTrackFeaturePair[energyListLength-1][0],
                                 energyTrackFeaturePair[energyListLength-2][0],
                                 energyTrackFeaturePair[energyListLength-3][0]];;
@@ -479,7 +451,7 @@ async function populateMoodtracks(valenceTrackFeaturePair, energyTrackFeaturePai
             artistNameSpan.setAttribute("id", "moodtracks-artist");
 
 
-            var trackInfoDiv = document.createElement("div");
+            var trackInfoDiv = document.createElement("a");
             trackInfoDiv.classList.add("moodtracks-track-info");
             var albumImg = document.createElement("img");
             albumImg.classList.add("moodtracks-album-img");
