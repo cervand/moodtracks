@@ -1,8 +1,4 @@
-let clientId ="0398c81e44224813ba198d3e48e98556", 
-    apiScope = "user-read-private user-read-email user-top-read user-library-read", 
-    redirectUri = "http://localhost:5500/yourmoodtracks.html";
-
-/*await fetch('/.netlify/functions/apitoken')
+await fetch('/.netlify/functions/apitoken')
   .then((response) => response.json())
   .then((data) => {
     clientId = data.CLIENT_ID;
@@ -14,7 +10,7 @@ let clientId ="0398c81e44224813ba198d3e48e98556",
     // Handle errors.
     console.error(error);
 });
-*/
+
 
 const trackLimit = '50';
 const displayedTrackListLimit = 10;
