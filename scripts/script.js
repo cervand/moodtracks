@@ -1,3 +1,5 @@
+let clientId, apiScope, redirectUri;
+
 await fetch('/.netlify/functions/apitoken')
   .then((response) => response.json())
   .then((data) => {
